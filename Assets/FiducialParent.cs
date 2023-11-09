@@ -10,6 +10,7 @@ public class FiducialParent : MonoBehaviour
 
     public GameObject toControl;
 
+    public float positionMultiplier;
     // Start is called before the first frame update
     void Awake()
     {
@@ -34,8 +35,10 @@ public class FiducialParent : MonoBehaviour
 
     void ApplyTransform()
     {
-        toControl.transform.position = fiducialController.screenPosition;
-        toControl.transform.rotation = Quaternion.Euler(0, 0, fiducialController.angleDegrees);
+        //to make sure 0,0,0 is the center, we have to subtract half of the multiplier. In reactivision, 0,0 is the upper left corner and 1,1 is the lower right corner.
+        Vector3 newPosition = new Vector3(-fiducialController.screenPosition.x * positionMultiplier + positionMultiplier / 2, toControl.transform.position.y, -fiducialController.screenPosition.y * positionMultiplier + positionMultiplier / 2);
+        toControl.transform.position = newPosition;
+        toControl.transform.rotation = Quaternion.Euler(0, -fiducialController.angleDegrees, 0);
     }
 
     void HideObject()
