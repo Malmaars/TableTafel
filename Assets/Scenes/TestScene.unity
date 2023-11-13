@@ -477,7 +477,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: abebcdd538a8a49af9ca534b0db0820c, type: 2}
+  - {fileID: 2100000, guid: 85eba262cbc8f44c5acb354796981f50, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -516,7 +516,7 @@ Transform:
   m_GameObject: {fileID: 318927601}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1.5, z: 0}
-  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_LocalScale: {x: 13, y: 1, z: 13}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -1564,6 +1564,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 128284119781231009, guid: c77fc4853d43e42cab2f57a739547227, type: 3}
   m_PrefabInstance: {fileID: 1369708559}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1901823194 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 128284119781231010, guid: c77fc4853d43e42cab2f57a739547227, type: 3}
+  m_PrefabInstance: {fileID: 128284120724817747}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5fd1fb9916734fa7bec6a6f8f7eee74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1915078602
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1639,7 +1650,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1931862414}
   - component: {fileID: 1931862413}
-  - component: {fileID: 1931862415}
   m_Layer: 0
   m_Name: CalbrationManager
   m_TagString: Untagged
@@ -1660,6 +1670,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   calibrationFiducial: 0
+  fiducialTracker: {fileID: 1901823194}
+  digitalTable: {fileID: 318927605}
   liftFiducialVisual: {fileID: 689238424}
   timeToEndCalibration: 5
 --- !u!4 &1931862414
@@ -1676,27 +1688,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1931862415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1931862412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5fd1fb9916734fa7bec6a6f8f7eee74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MarkerID: 0
-  IsPositionMapped: 0
-  InvertX: 0
-  InvertY: 0
-  IsRotationMapped: 0
-  AutoHideGO: 0
-  CameraOffset: 10
-  RotateAround: 1
-  RotationMultiplier: 1
 --- !u!1001 &128284120724817747
 PrefabInstance:
   m_ObjectHideFlags: 0

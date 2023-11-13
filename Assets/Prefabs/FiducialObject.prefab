@@ -67,7 +67,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toControl: {fileID: 128284120589494962}
-  positionMultiplier: 0
+  positionXMultiplier: 10
+  positionYMultiplier: 10
 --- !u!1 &128284120589494962
 GameObject:
   m_ObjectHideFlags: 0

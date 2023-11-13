@@ -8,8 +8,9 @@ public class CalibrationManager : MonoBehaviour
     Camera mainCamera;
 
     public int calibrationFiducial;
-    private FiducialController fiducialTracker;
+    public FiducialController fiducialTracker;
 
+    public Transform digitalTable;
     //if calibrating is 0, there is no calibration. Above 0 is calibrating, which will go through the steps counting up.
     int calibrating;
     bool liftFiducial;
@@ -25,9 +26,6 @@ public class CalibrationManager : MonoBehaviour
     void Awake()
     {
         mainCamera = Camera.main;
-        fiducialTracker = GetComponent<FiducialController>();
-        fiducialTracker.MarkerID = calibrationFiducial;
-
         StartCalibration();
     }
 
@@ -43,7 +41,10 @@ public class CalibrationManager : MonoBehaviour
                     {
                         //give a prompt to lift the tracker from the table
                         if (LiftTracker())
+                        {
+                            liftFiducial = false;
                             calibrating++;
+                        }
                     }
                     break;
                 case 2:
@@ -69,8 +70,9 @@ public class CalibrationManager : MonoBehaviour
 
         //the new position will be a general offset for everything
         Vector2 newCenter = new Vector2(0, 0);
-        newCenter = fiducialTracker.screenPosition;
-        BlackBoard.offset = newCenter;
+        newCenter = new Vector2(-fiducialTracker.screenPosition.x * 10 + 5, -fiducialTracker.screenPosition.y * 10 + 5);
+        BlackBoard.offset = new Vector3(newCenter.x, 0, newCenter.y);
+        mainCamera.transform.position = new Vector3(-newCenter.x, mainCamera.transform.position.y, -newCenter.y);
 
         //if the fiducial is on the same place long enough, end the calibration.
 
@@ -81,6 +83,7 @@ public class CalibrationManager : MonoBehaviour
             {
                 //end this calibration
                 calibrationtimer = 0;
+                liftFiducial = true;
                 return true;
             }
         }
@@ -88,7 +91,7 @@ public class CalibrationManager : MonoBehaviour
         {
             calibrationtimer = 0;
         }
-        lastPosition = fiducialTracker.screenPosition;
+        lastPosition = newCenter;
         return false;
     }
 
@@ -99,15 +102,20 @@ public class CalibrationManager : MonoBehaviour
         float speed = fiducialTracker.speed;
 
         //I can't test this yet, tweak it when necessary
-        mainCamera.orthographicSize += direction.x * speed;
 
-        if (fiducialTracker.screenPosition == lastPosition && fiducialTracker.isVisible)
+        //change the size of the table, not the size of the camera
+        //mainCamera.orthographicSize += direction.x * speed;
+
+        digitalTable.localScale += new Vector3(direction.x * speed, 0, direction.y * speed);
+
+        if (fiducialTracker.ScreenPosition == lastPosition && fiducialTracker.isVisible)
         {
             calibrationtimer += Time.deltaTime;
             if (calibrationtimer > timeToEndCalibration)
             {
                 //end this calibration
                 calibrationtimer = 0;
+                liftFiducial = true;
                 return true;
             }
         }
@@ -115,6 +123,8 @@ public class CalibrationManager : MonoBehaviour
         {
             calibrationtimer = 0;
         }
+
+        lastPosition = fiducialTracker.ScreenPosition;
 
         return false;
     }
@@ -124,9 +134,11 @@ public class CalibrationManager : MonoBehaviour
         //change the aspect ratio of the camera to combat slight change in perspective from the beamer
     }
 
+
+
     bool LiftTracker()
     {
-
+        Debug.Log(fiducialTracker.isVisible);
         //show a text on the screen to lift the fiducial
         if (fiducialTracker.isVisible)
         {

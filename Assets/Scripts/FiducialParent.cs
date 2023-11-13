@@ -10,7 +10,8 @@ public class FiducialParent : MonoBehaviour
 
     public GameObject toControl;
 
-    public float positionMultiplier;
+    public float positionXMultiplier;
+    public float positionYMultiplier;
     // Start is called before the first frame update
     void Awake()
     {
@@ -36,8 +37,12 @@ public class FiducialParent : MonoBehaviour
     void ApplyTransform()
     {
         //to make sure 0,0,0 is the center, we have to subtract half of the multiplier. In reactivision, 0,0 is the upper left corner and 1,1 is the lower right corner.
-        Vector3 newPosition = new Vector3(-fiducialController.screenPosition.x * positionMultiplier + positionMultiplier / 2, toControl.transform.position.y, -fiducialController.screenPosition.y * positionMultiplier + positionMultiplier / 2);
-        toControl.transform.position = newPosition;
+
+        //The input from reactivision is widescreen, so 0-1 in width has a much bigger difference than 0-1 in height. To combat this, I divide them by the screenwidth (which I think is 1920x1080)
+        Vector3 newPosition = new Vector3(-fiducialController.screenPosition.x * positionXMultiplier + positionXMultiplier / 2, toControl.transform.position.y, -fiducialController.screenPosition.y * positionYMultiplier + positionYMultiplier / 2);
+        Debug.Log(newPosition);
+        toControl.transform.position = newPosition + BlackBoard.offset;
+        Debug.Log(toControl.transform.position);
         toControl.transform.rotation = Quaternion.Euler(0, -fiducialController.angleDegrees, 0);
     }
 
@@ -50,4 +55,6 @@ public class FiducialParent : MonoBehaviour
     {
         toControl.SetActive(true);
     }
+
+
 }

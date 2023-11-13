@@ -4,5 +4,5 @@ using UnityEngine;
 
 public static class BlackBoard
 {
-    public static Vector2 offset;
+    public static Vector3 offset;
 }
