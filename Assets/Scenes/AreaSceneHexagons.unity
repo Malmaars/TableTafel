@@ -1649,9 +1649,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c59bf5f5041c244cf9284187199b9a33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSize: {x: 30, y: 30}
-  distance: {x: 0.2, y: 0.2}
-  gridPart: {fileID: 6526324990009868323, guid: 96101bec118e34d12a5438d7647925b6, type: 3}
+  gridSize: {x: 100, y: 100}
+  distance: {x: 1, y: 0.4330127}
+  rowOffset: 0.5
+  gridPart: {fileID: 6526324990009868323, guid: df55f0104390b44f3947198545146298, type: 3}
 --- !u!4 &2071777333
 Transform:
   m_ObjectHideFlags: 0
