@@ -13,7 +13,6 @@ public static class BlackBoard
     public static Vector2 NegY;
 
 
-
     public static float Xratio;
     public static float YRatio;
 }

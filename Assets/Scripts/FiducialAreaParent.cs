@@ -2,19 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum fiducialColor
-{
-    blue,
-    red,
-    green,
-    yellow,
-    purple,
-    orange,
-    white,
-    black
-}
-
-public class FiducialParent : MonoBehaviour
+public class FiducialAreaParent : MonoBehaviour
 {
 
     //Local fiducial controller, this is necessary to run this class. Make sure it's attached to the same gameobject.
@@ -46,7 +34,10 @@ public class FiducialParent : MonoBehaviour
         }
 
         if (toControl.activeSelf)
+        {
             ApplyTransform();
+            RotateSomething();
+        }
     }
 
     void ApplyTransform()
@@ -78,6 +69,11 @@ public class FiducialParent : MonoBehaviour
         Vector3 newPosition = new Vector3(-fiducialController.screenPosition.x * positionXMultiplier + positionXMultiplier / 2, toControl.transform.position.y, -fiducialController.screenPosition.y * positionYMultiplier + positionYMultiplier / 2);
         toControl.transform.position = newPosition + BlackBoard.offset;
         toControl.transform.rotation = Quaternion.Euler(0, -fiducialController.angleDegrees, 0);
+    }
+
+    void RotateSomething()
+    {
+        toControl.GetComponent<FidController>().RotateController(fiducialController.rotationSpeed, fiducialController.speed);
     }
 
     void HideObject()

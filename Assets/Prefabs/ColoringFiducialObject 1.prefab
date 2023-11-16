@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 128284119781231010}
   - component: {fileID: 128284119781231011}
   m_Layer: 0
-  m_Name: FiducialObject
+  m_Name: ColoringFiducialObject 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,6 +69,11 @@ MonoBehaviour:
   toControl: {fileID: 128284120589494962}
   positionXMultiplier: 10
   positionYMultiplier: 10
+  thisColor: 0
+  materialColors:
+  - {fileID: 2100000, guid: dee3ad398c52f465c8404effe51c1670, type: 2}
+  - {fileID: 2100000, guid: abebcdd538a8a49af9ca534b0db0820c, type: 2}
+  - {fileID: 2100000, guid: 7843260a83aca410cbde36f13f837eca, type: 2}
 --- !u!1 &128284120589494962
 GameObject:
   m_ObjectHideFlags: 0
@@ -81,13 +86,14 @@ GameObject:
   - component: {fileID: 128284120589494967}
   - component: {fileID: 128284120589494960}
   - component: {fileID: 128284120589494961}
+  - component: {fileID: 3322813758963687354}
   m_Layer: 0
   m_Name: Controlled
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &128284120589494966
 Transform:
   m_ObjectHideFlags: 0
@@ -159,8 +165,20 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 128284120589494962}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3322813758963687354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128284120589494962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22c0d8b6a92ac4157ac17d445ed1df6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

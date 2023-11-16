@@ -29,7 +29,6 @@ public class CalibrationManager : MonoBehaviour
     void Awake()
     {
         mainCamera = Camera.main;
-        StartCalibration();
     }
 
     // Update is called once per frame
@@ -129,7 +128,7 @@ public class CalibrationManager : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.C))
-            calibrating = 1;
+            StartCalibration();
     }
 
     public void StartCalibration()
@@ -146,7 +145,7 @@ public class CalibrationManager : MonoBehaviour
         Vector2 newCenter = new Vector2(0, 0);
         newCenter = new Vector2(-fiducialTracker.screenPosition.x * 10 + 5, -fiducialTracker.screenPosition.y * 10 + 5);
         BlackBoard.offset = new Vector3(newCenter.x, 0, newCenter.y);
-        digitalTable.transform.position = new Vector3(-newCenter.x, mainCamera.transform.position.y, -newCenter.y);
+        digitalTable.transform.position = new Vector3(newCenter.x, digitalTable.transform.position.y, newCenter.y);
 
         //if the fiducial is on the same place long enough, end the calibration.
 
