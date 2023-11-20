@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface ITile
 {
-
+    public void ChangePosition(Vector2 _offset);
 }
 
 public class Hexagon : ITile
@@ -16,4 +16,10 @@ public class Hexagon : ITile
     }
     Vector2 position;
     GameObject visual;
+
+    public void ChangePosition(Vector2 _offset)
+    {
+        position += _offset;
+        visual.transform.position += new Vector3(_offset.x, 0, _offset.y);
+    }
 }

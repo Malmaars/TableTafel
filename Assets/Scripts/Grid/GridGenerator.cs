@@ -13,33 +13,45 @@ public class GridGenerator : MonoBehaviour
 {
     public Vector2 gridSize;
     public Vector2 distance;
-    public float rowOffset;
+    public float heightOffset;
     public GameObject gridPart;
     public tileType type;
 
-    GridController gridController;
+    public bool debugMode;
+    public GameObject debugVisual;
+
+    public ITile[,] gridArray;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        gridController = FindObjectOfType<GridController>();
-        ITile[,] gridArray = new ITile[(int)gridSize.x, (int)gridSize.y];
+        gridArray = new ITile[(int)gridSize.x, (int)gridSize.y];
        //generate the Cubes
-       for(float i = -gridSize.x / 2; i < gridSize.x / 2; i++)
+       for(float i = 0; i < gridSize.x; i++)
         {
-            for(float k = -gridSize.y / 2; k < gridSize.y / 2; k++)
+            for(float k = 0; k < gridSize.y; k++)
             {
                 GameObject visualTile;
-                if (k % 2 == 0)
-                    visualTile = Instantiate(gridPart, new Vector3(i * distance.x, 0, k * distance.y), new Quaternion(0, 0, 0, 0));
+
+                float xPos, yPos;
+
+                xPos = i * distance.x;
+
+                if (i % 2 == 0)
+                    yPos = k * distance.y;
 
                 else
-                    visualTile = Instantiate(gridPart, new Vector3(i * distance.x + rowOffset, 0, k * distance.y), new Quaternion(0, 0, 0, 0));
+                    yPos = k * distance.y + heightOffset;
+
+                visualTile = Instantiate(gridPart, new Vector3(xPos, 0, yPos), new Quaternion(0, 0, 0, 0));
+
 
                 switch (type)
                 {
                     case tileType.hexagon:
-                        new Hexagon(new Vector2(i, k), visualTile);
-                        visualTile.GetComponentInChildren<TextMeshPro>().text = i + ", " + k;
+                        gridArray[(int)i, (int)k] = new Hexagon(new Vector2(i, k), visualTile);
+                        if (debugMode)
+                            Instantiate(debugVisual, visualTile.transform);
+                            visualTile.GetComponentInChildren<TextMeshPro>().text = i + ", " + k;
                         break;
                 }
             }

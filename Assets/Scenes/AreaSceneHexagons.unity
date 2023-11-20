@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.17276844, g: 0.21589246, b: 0.2978263, a: 1}
+  m_IndirectSpecularColor: {r: 0.17276774, g: 0.21589115, b: 0.2978246, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1834,8 +1834,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridSize: {x: 100, y: 100}
-  distance: {x: 0.75, y: 0.21650635}
-  rowOffset: 0.375
+  distance: {x: 0.375, y: 0.4330126}
+  rowOffset: 0
+  heightOffset: 0.2165063
   gridPart: {fileID: 6526324990009868323, guid: df55f0104390b44f3947198545146298, type: 3}
   type: 1
 --- !u!4 &2071777333
