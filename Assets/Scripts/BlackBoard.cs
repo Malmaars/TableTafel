@@ -16,5 +16,6 @@ public static class BlackBoard
     public static float Xratio;
     public static float YRatio;
 
-    public static Vector2 GridOffset;
+    public static Vector2 gridOffset;
+    public static GridController gridController;
 }

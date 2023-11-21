@@ -24,11 +24,11 @@ public class FiducialAreaParent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (fiducialController.isVisible)
+        if (fiducialController.isVisible && toControl.activeSelf == false)
         {
             ShowObject();
         }
-        else if(!fiducialController.isVisible)
+        else if(!fiducialController.isVisible && toControl.activeSelf == true)
         {
             HideObject();
         }

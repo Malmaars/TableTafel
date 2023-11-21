@@ -5,17 +5,21 @@ using UnityEngine;
 public interface ITile
 {
     public void ChangePosition(Vector2 _offset);
+    public GameObject visual { get; set; }
+    public fiducialColor myColor { get; set; }
 }
 
 public class Hexagon : ITile
 {
-    public Hexagon(Vector2 _position, GameObject _visual)
+    public Hexagon(Vector2 _position, GameObject _visual, fiducialColor _color)
     {
         position = _position;
         visual = _visual;
+        myColor = _color;
     }
     Vector2 position;
-    GameObject visual;
+    public GameObject visual { get; set; }
+    public fiducialColor myColor { get; set; }
 
     public void ChangePosition(Vector2 _offset)
     {

@@ -48,10 +48,12 @@ public class GridGenerator : MonoBehaviour
                 switch (type)
                 {
                     case tileType.hexagon:
-                        gridArray[(int)i, (int)k] = new Hexagon(new Vector2(i, k), visualTile);
+                        gridArray[(int)i, (int)k] = new Hexagon(new Vector2(i, k), visualTile, fiducialColor.white);
                         if (debugMode)
+                        {
                             Instantiate(debugVisual, visualTile.transform);
                             visualTile.GetComponentInChildren<TextMeshPro>().text = i + ", " + k;
+                        }
                         break;
                 }
             }
