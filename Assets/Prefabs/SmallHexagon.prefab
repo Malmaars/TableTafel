@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1117704911342927818}
   - component: {fileID: 2829397913615490234}
   - component: {fileID: 8739144128739651077}
-  - component: {fileID: 4958113158815588028}
   m_Layer: 0
   m_Name: SmallHexagon
   m_TagString: GridCube
@@ -82,16 +81,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4958113158815588028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6526324990009868323}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b75bc4beff83e4d28a6cb3166b58e5ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thisColor: 6

@@ -5,6 +5,7 @@ using UnityEngine;
 public interface ITile
 {
     public void ChangePosition(Vector2 _offset);
+    public Vector2 position { get; set; }
     public GameObject visual { get; set; }
     public fiducialColor myColor { get; set; }
 }
@@ -17,7 +18,7 @@ public class Hexagon : ITile
         visual = _visual;
         myColor = _color;
     }
-    Vector2 position;
+    public Vector2 position { get; set; }
     public GameObject visual { get; set; }
     public fiducialColor myColor { get; set; }
 
