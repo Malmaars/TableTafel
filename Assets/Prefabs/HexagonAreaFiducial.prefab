@@ -47,7 +47,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5437970699344882535}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -148,16 +148,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toControl: {fileID: 5437970699344882535}
-  range: 10
+  range: 12
   positionXMultiplier: 10
   positionYMultiplier: 10
   thisColor: 0
   materialColors:
-  - {fileID: 2100000, guid: dee3ad398c52f465c8404effe51c1670, type: 2}
-  - {fileID: 2100000, guid: abebcdd538a8a49af9ca534b0db0820c, type: 2}
-  - {fileID: 2100000, guid: 7843260a83aca410cbde36f13f837eca, type: 2}
-  - {fileID: 2100000, guid: 4cfe55aae4306430a9d41e6578f4a1a1, type: 2}
-  - {fileID: 2100000, guid: 1b02cdc575c614708910a318a5340273, type: 2}
-  - {fileID: 2100000, guid: 9d80b197eb6d04b90a462a0d233b2cf6, type: 2}
-  - {fileID: 2100000, guid: cce64e54c52ab4a5cbb61c1d042061f9, type: 2}
-  - {fileID: 2100000, guid: 0ccf7c9bb0f2147528f3c76119e12179, type: 2}
+  - {fileID: 2100000, guid: f2f094b42d39a4251b4968e58bf7222f, type: 2}
+  - {fileID: 2100000, guid: 77ce877a941d04665b92e286e7168931, type: 2}
+  - {fileID: 2100000, guid: 334b9eb15f6c042449ccd071dae4df92, type: 2}
+  - {fileID: 2100000, guid: 0466735d306fe4bbab9af82e3468826c, type: 2}
+  - {fileID: 2100000, guid: 6f8efdd1c7fbb43acbb24611ad856309, type: 2}
+  - {fileID: 2100000, guid: 687350a599b3f4d77a2f8a5e25ec20c1, type: 2}
+  - {fileID: 2100000, guid: ece5410b2fe514b3f984c76b2a6c2893, type: 2}
+  - {fileID: 2100000, guid: c37d8985eed9144bbb7cf93dd2dc2366, type: 2}
+  maximumFoliage: 0

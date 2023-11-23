@@ -24,9 +24,16 @@ public class HexagonAreaParent : MonoBehaviour
     Vector2 currentHexagonPosition;
     float currentRotation;
 
+    //make things look a little prettier
+    FoliageGenerator foliageGenerator;
+
+    public float maximumFoliage;
+    int currentFoliage;
+
     // Start is called before the first frame update
     void Awake()
     {
+        foliageGenerator = FindObjectOfType<FoliageGenerator>();
         toRemove = new HashSet<ITile>();
         currentSelection = new HashSet<ITile>();
         radius = range / 2;
@@ -57,7 +64,11 @@ public class HexagonAreaParent : MonoBehaviour
             }
 
             RotateSomething();
-            CheckArea();
+            foreach(ITile item in CheckArea())
+            {
+                if (!currentSelection.Contains(item))
+                    ChangeHexagon(item);
+            }
         }
     }
 
@@ -68,20 +79,20 @@ public class HexagonAreaParent : MonoBehaviour
 
         if (fiducialController.ScreenPosition.x >= 0.5f)
         {
-            positionXMultiplier = 15.4f;
+            positionXMultiplier = 42f;
         }
         else
         {
-            positionXMultiplier = 15f;
+            positionXMultiplier = 36f;
         }
 
         if (fiducialController.ScreenPosition.y >= 0.5f)
         {
-            positionYMultiplier = 12.8f;
+            positionYMultiplier = 30.5f;
         }
         else
         {
-            positionYMultiplier = 10.9f;
+            positionYMultiplier = 24.8f;
         }
 
         //to make sure 0,0,0 is the center, we have to subtract half of the multiplier. In reactivision, 0,0 is the upper left corner and 1,1 is the lower right corner.
@@ -102,13 +113,14 @@ public class HexagonAreaParent : MonoBehaviour
         {
             return;
         }
-        radius += fiducialController.RotationSpeed;
+        radius += fiducialController.RotationSpeed * 3;
         if (radius > range)
             radius = range;
         else if (radius < 0)
             radius = 0;
 
         currentRotation = fiducialController.angle;
+        maximumFoliage = radius * 3;
     }
 
     void HideObject()
@@ -125,10 +137,7 @@ public class HexagonAreaParent : MonoBehaviour
     {
         foreach(ITile item in currentSelection)
         {
-            Vector2 checkPosition = BlackBoard.gridController.ConvertWorldPositionToHexagonPosition(new Vector2(toControl.transform.position.x, toControl.transform.position.z));
-            Vector2 itemPosition = item.position;
-
-            if(Vector2.Distance(checkPosition, itemPosition) > radius)
+            if(!CheckArea().Contains(item))
             {
                 ResetHexagon(item);
                 toRemove.Add(item);
@@ -143,8 +152,10 @@ public class HexagonAreaParent : MonoBehaviour
         toRemove.Clear();
     }
 
-    void CheckArea()
+    HashSet<ITile> CheckArea()
     {
+        HashSet<ITile> newSelection = new HashSet<ITile>();
+
         //get the hexagon position of the object
         Vector2 positionOnGrid = BlackBoard.gridController.ConvertWorldPositionToHexagonPosition(new Vector2(toControl.transform.position.x, toControl.transform.position.z));
         int xGridPos = Mathf.RoundToInt(positionOnGrid.x);
@@ -155,7 +166,7 @@ public class HexagonAreaParent : MonoBehaviour
         for (int i = -Mathf.RoundToInt(radius); i <= Mathf.RoundToInt(radius); i++)
         {
             ITile targetTile = BlackBoard.gridController.Grid[xGridPos, yGridPos + i];
-            ChangeHexagon(targetTile);
+            newSelection.Add(targetTile);
         }
         int newYPos = yGridPos;
         float repeatingY = 1;
@@ -185,150 +196,58 @@ public class HexagonAreaParent : MonoBehaviour
             }
 
             ITile targetTile = BlackBoard.gridController.Grid[xGridPos + k, Mathf.RoundToInt(newYPos)];
-            ChangeHexagon(targetTile);
+            newSelection.Add(targetTile);
 
             targetTile = BlackBoard.gridController.Grid[xGridPos - k, Mathf.RoundToInt(newYPos)];
-            ChangeHexagon(targetTile);
+            newSelection.Add(targetTile);
 
             targetTile = BlackBoard.gridController.Grid[xGridPos - k, Mathf.RoundToInt(oppositeYpos)];
-            ChangeHexagon(targetTile);
+            newSelection.Add(targetTile);
 
             targetTile = BlackBoard.gridController.Grid[xGridPos + k, Mathf.RoundToInt(oppositeYpos)];
-            ChangeHexagon(targetTile);
+            newSelection.Add(targetTile);
 
-            for(int p = 1; p < k; p++)
+            for (int p = 1; p < k; p++)
             {
                 targetTile = BlackBoard.gridController.Grid[xGridPos + k, Mathf.RoundToInt(oppositeYpos) + p];
-                ChangeHexagon(targetTile);
+                newSelection.Add(targetTile);
                 targetTile = BlackBoard.gridController.Grid[xGridPos - k, Mathf.RoundToInt(oppositeYpos) + p];
-                ChangeHexagon(targetTile);
+                newSelection.Add(targetTile);
             }
 
 
             for (int p = 1; p <= Mathf.RoundToInt(radius) - k; p++)
             {
                 targetTile = BlackBoard.gridController.Grid[xGridPos + k, Mathf.RoundToInt(newYPos) + p];
-                ChangeHexagon(targetTile);
+                newSelection.Add(targetTile);
                 targetTile = BlackBoard.gridController.Grid[xGridPos - k, Mathf.RoundToInt(newYPos) + p];
-                ChangeHexagon(targetTile);
+                newSelection.Add(targetTile);
 
                 targetTile = BlackBoard.gridController.Grid[xGridPos + k, Mathf.RoundToInt(oppositeYpos) - p];
-                ChangeHexagon(targetTile);
+                newSelection.Add(targetTile);
                 targetTile = BlackBoard.gridController.Grid[xGridPos - k, Mathf.RoundToInt(oppositeYpos) - p];
-                ChangeHexagon(targetTile);
+                newSelection.Add(targetTile);
             }
 
             oppositeRepeatingY++;
             repeatingY++;
             k++;
             distance++;
-
         }
-        /*
-            //now get every hexagon in range
-            for (int i = -Mathf.RoundToInt(radius); i <= Mathf.RoundToInt(radius); i++)
-            {
-                for (int k = -Mathf.RoundToInt(radius); k <= Mathf.RoundToInt(radius); k++)
-                {
-                    if (xGridPos + i < 0 || yGridPos + k < 0 || xGridPos + i >= BlackBoard.gridController.Grid.Length || yGridPos + k >= BlackBoard.gridController.Grid.Length)
-                        continue;
-                    if (Mathf.Sqrt(Mathf.Pow(i,2)) + Mathf.Sqrt(Mathf.Pow(k, 2)) > radius)
-                        continue;
-
-                    ITile targetTile = BlackBoard.gridController.Grid[xGridPos + i, yGridPos + k];
-
-                    if (!currentSelection.Contains(targetTile))
-                    {
-                        currentSelection.Add(targetTile);
-                    }
-                    //targetTile.visual.GetComponent<MeshRenderer>().material = blue
-                    switch (thisColor)
-                    {
-                        case fiducialColor.blue:
-                            if (targetTile.myColor == fiducialColor.red)
-                            {
-                                targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[4];
-                                targetTile.myColor = fiducialColor.purple;
-                            }
-                            else if (targetTile.myColor == fiducialColor.yellow)
-                            {
-                                targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[3];
-                                targetTile.myColor = fiducialColor.green;
-                            }
-                            else if (targetTile.myColor == fiducialColor.orange)
-                            {
-                                targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[6];
-                                targetTile.myColor = fiducialColor.black;
-                            }
-                            else if (targetTile.myColor == fiducialColor.white)
-                            {
-                                targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[0];
-                                targetTile.myColor = fiducialColor.blue;
-
-                            }
-                            break;
-                        case fiducialColor.red:
-                            if (targetTile.myColor == fiducialColor.blue)
-                            {
-                                targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[4];
-                                targetTile.myColor = fiducialColor.purple;
-                            }
-                            else if (targetTile.myColor == fiducialColor.yellow)
-                            {
-                                targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[5];
-                                targetTile.myColor = fiducialColor.orange;
-                            }
-                            else if (targetTile.myColor == fiducialColor.green)
-                            {
-                                targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[6];
-                                targetTile.myColor = fiducialColor.black;
-                            }
-                            else if (targetTile.myColor == fiducialColor.white)
-                            {
-                                targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[1];
-                                targetTile.myColor = fiducialColor.red;
-
-                            }
-                            break;
-                        case fiducialColor.yellow:
-                            if (targetTile.myColor == fiducialColor.blue)
-                            {
-                                targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[3];
-                                targetTile.myColor = fiducialColor.green;
-                            }
-                            else if (targetTile.myColor == fiducialColor.red)
-                            {
-                                targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[5];
-                                targetTile.myColor = fiducialColor.orange;
-                            }
-                            else if (targetTile.myColor == fiducialColor.purple)
-                            {
-                                targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[6];
-                                targetTile.myColor = fiducialColor.black;
-                            }
-                            else if (targetTile.myColor == fiducialColor.white)
-                            {
-                                targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[2];
-                                targetTile.myColor = fiducialColor.yellow;
-
-                            }
-                            break;
-                    }
-                }
-            }
-        */
+        return newSelection;
     }
 
     void LeaveArea()
     {
-        toRemove = new HashSet<ITile>(currentSelection);
-        CompareCurrentTiles();
-     }
+        foreach (ITile item in currentSelection)
+        {
+            ResetHexagon(item);
+        }
+        currentSelection.Clear();
+    }
 
     void ChangeHexagon(ITile targetTile)
     {
-
-
         if (!currentSelection.Contains(targetTile))
         {
             currentSelection.Add(targetTile);
@@ -337,6 +256,7 @@ public class HexagonAreaParent : MonoBehaviour
         {
             return;
         }
+
         //targetTile.visual.GetComponent<MeshRenderer>().material = blue
         switch (thisColor)
         {
@@ -360,7 +280,6 @@ public class HexagonAreaParent : MonoBehaviour
                 {
                     targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[0];
                     targetTile.myColor = fiducialColor.blue;
-
                 }
                 break;
             case fiducialColor.red:
@@ -383,7 +302,6 @@ public class HexagonAreaParent : MonoBehaviour
                 {
                     targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[1];
                     targetTile.myColor = fiducialColor.red;
-
                 }
                 break;
             case fiducialColor.yellow:
@@ -406,9 +324,19 @@ public class HexagonAreaParent : MonoBehaviour
                 {
                     targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[2];
                     targetTile.myColor = fiducialColor.yellow;
-
                 }
                 break;
+        }
+
+        if (targetTile.foliage == null && currentFoliage < maximumFoliage)
+        {
+            int randomInt = Random.Range(0, 20);
+            if (randomInt == 0)
+            {
+                //create new foliage
+                targetTile.foliage = foliageGenerator.GenerateFoliage(thisColor, targetTile.visual.transform.position);
+                currentFoliage++;
+            }
         }
     }
 
@@ -484,5 +412,11 @@ public class HexagonAreaParent : MonoBehaviour
                 break;
         }
 
+        if(targetTile.foliage != null && targetTile.foliage.foliageColor == thisColor)
+        {
+            foliageGenerator.RemoveFoliage(targetTile.foliage);
+            targetTile.foliage = null;
+            currentFoliage--;
+        }
     }
 }

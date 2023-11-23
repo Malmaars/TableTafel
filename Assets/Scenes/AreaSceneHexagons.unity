@@ -971,7 +971,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 12
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1103,6 +1103,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 119533094}
     m_Modifications:
+    - target: {fileID: 5437970699344882530, guid: ffe3da0cb9adf45f6a16ab2b208ae7ec, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5437970700484419801, guid: ffe3da0cb9adf45f6a16ab2b208ae7ec, type: 3}
       propertyPath: MarkerID
       value: 1
@@ -1806,6 +1810,7 @@ GameObject:
   - component: {fileID: 2071777333}
   - component: {fileID: 2071777332}
   - component: {fileID: 2071777334}
+  - component: {fileID: 2071777335}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -1825,7 +1830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c59bf5f5041c244cf9284187199b9a33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSize: {x: 100, y: 100}
+  gridSize: {x: 90, y: 80}
   distance: {x: 0.375, y: 0.4330126}
   heightOffset: 0.2165063
   gridPart: {fileID: 6526324990009868323, guid: df55f0104390b44f3947198545146298, type: 3}
@@ -1859,3 +1864,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridGenerator: {fileID: 2071777332}
+--- !u!114 &2071777335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071777331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b21702dd77ddf4ac5a02bc15979d88d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grassFoliagePrefabs:
+  - {fileID: 919132149155446097, guid: d4b6de4c70db64fc2bb90f99befa8e6b, type: 3}
+  - {fileID: 919132149155446097, guid: 4879bb8a46d554bd48fbfcf75c84067f, type: 3}
+  - {fileID: 919132149155446097, guid: 4418543c3ce9a448cbb8feaf33f485ee, type: 3}
+  - {fileID: 919132149155446097, guid: e69a13e1d01c54717987f7a361e1907e, type: 3}
+  waterFoliagePrefabs:
+  - {fileID: 919132149155446097, guid: e6ca42c303bc94613a088a35265a2950, type: 3}
+  - {fileID: 919132149155446097, guid: 0d75367b037c94c099e2ce94a20fe93b, type: 3}
+  - {fileID: 919132149155446097, guid: c5a27aef8635f469789a5ce84d2b83cc, type: 3}
+  - {fileID: 919132149155446097, guid: f54c2b18f204747c5870a36f2e265bad, type: 3}
+  - {fileID: 919132149155446097, guid: 20c368470687348ce899f58496110699, type: 3}
+  sandFoliagePrefabs:
+  - {fileID: 919132149155446097, guid: b749c442a3f084dc7969a931ffe2a9d9, type: 3}
+  - {fileID: 919132149155446097, guid: 45f3d17e0f2624b999265a98186d4e38, type: 3}
+  - {fileID: 919132149155446097, guid: 1ad74fa06a8554bbd971fcd8b23eb154, type: 3}
+  - {fileID: 919132149155446097, guid: d2fede7aace594857a6b6ab554714abe, type: 3}
+  - {fileID: 919132149155446097, guid: 75dddd809be294443bf9116d8d509d7b, type: 3}
+  - {fileID: 919132149155446097, guid: 9d8676101ee4b4cf4842e31f5104eed4, type: 3}

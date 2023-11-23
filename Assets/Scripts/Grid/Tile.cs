@@ -8,6 +8,8 @@ public interface ITile
     public Vector2 position { get; set; }
     public GameObject visual { get; set; }
     public fiducialColor myColor { get; set; }
+
+    public foliage foliage { get; set; }
 }
 
 public class Hexagon : ITile
@@ -21,6 +23,7 @@ public class Hexagon : ITile
     public Vector2 position { get; set; }
     public GameObject visual { get; set; }
     public fiducialColor myColor { get; set; }
+    public foliage foliage { get; set; }
 
     public void ChangePosition(Vector2 _offset)
     {
