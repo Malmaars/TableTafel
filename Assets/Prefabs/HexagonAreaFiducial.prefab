@@ -161,4 +161,13 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 687350a599b3f4d77a2f8a5e25ec20c1, type: 2}
   - {fileID: 2100000, guid: ece5410b2fe514b3f984c76b2a6c2893, type: 2}
   - {fileID: 2100000, guid: c37d8985eed9144bbb7cf93dd2dc2366, type: 2}
+  colorSprites:
+  - {fileID: 21300000, guid: 565a9b5e5741847f1977f7fe4378864d, type: 3}
+  - {fileID: 21300000, guid: b38a5b20894374139a30c7e060cf1799, type: 3}
+  - {fileID: 21300000, guid: 26a54cdd62f0445458d2e719629d7052, type: 3}
+  - {fileID: 21300000, guid: 62f9c161892a0402a83858211fc479c4, type: 3}
+  - {fileID: 21300000, guid: 2890e8e52ee694aa585c48252c69cbaa, type: 3}
+  - {fileID: 21300000, guid: 810120b3a3934411fa19d16bee51173e, type: 3}
+  - {fileID: 21300000, guid: 928ab2867e44541998a70859008fbcd8, type: 3}
+  - {fileID: 21300000, guid: 83cbd157be60348778ef528a8691daeb, type: 3}
   maximumFoliage: 0

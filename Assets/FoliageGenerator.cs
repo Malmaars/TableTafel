@@ -47,6 +47,7 @@ public class FoliageGenerator : MonoBehaviour
 
     public foliage GenerateFoliage(fiducialColor _color, Vector3 _position)
     {
+        _position += new Vector3(0, 1, 0);
         Debug.Log("generate Foliage");
         foliage newFoliage = null;
         switch (_color)
@@ -59,7 +60,8 @@ public class FoliageGenerator : MonoBehaviour
                 }
                 else
                 {
-                    newFoliage = new foliage(Instantiate(waterFoliagePrefabs[currentWaterFoliage], _position, Quaternion.identity), fiducialColor.blue);
+                    Quaternion newRotation = Quaternion.Euler(new Vector3(waterFoliagePrefabs[currentWaterFoliage].transform.rotation.eulerAngles.x, 0, Random.Range(0, 360f)));
+                    newFoliage = new foliage(Instantiate(waterFoliagePrefabs[currentWaterFoliage], _position, newRotation), fiducialColor.blue);
                     currentWaterFoliage++;
                     if (currentWaterFoliage >= waterFoliagePrefabs.Length)
                         currentWaterFoliage = 0;
@@ -74,7 +76,8 @@ public class FoliageGenerator : MonoBehaviour
                 }
                 else
                 {
-                    newFoliage = new foliage(Instantiate(grassFoliagePrefabs[currentGrassFoliage], _position, Quaternion.identity), fiducialColor.red);
+                    Quaternion newRotation = Quaternion.Euler(new Vector3(grassFoliagePrefabs[currentGrassFoliage].transform.rotation.eulerAngles.x, 0, Random.Range(0, 360f)));
+                    newFoliage = new foliage(Instantiate(grassFoliagePrefabs[currentGrassFoliage], _position, newRotation), fiducialColor.red);
                     currentGrassFoliage++;
                     if (currentGrassFoliage >= grassFoliagePrefabs.Length)
                         currentGrassFoliage = 0;
@@ -89,7 +92,8 @@ public class FoliageGenerator : MonoBehaviour
                 }
                 else
                 {
-                    newFoliage = new foliage(Instantiate(sandFoliagePrefabs[currentSandFoliage], _position, Quaternion.identity), fiducialColor.yellow);
+                    Quaternion newRotation = Quaternion.Euler(new Vector3(sandFoliagePrefabs[currentSandFoliage].transform.rotation.eulerAngles.x, 0, Random.Range(0, 360f)));
+                    newFoliage = new foliage(Instantiate(sandFoliagePrefabs[currentSandFoliage], _position, newRotation), fiducialColor.yellow);
                     currentSandFoliage++;
                     if (currentSandFoliage >= sandFoliagePrefabs.Length)
                         currentSandFoliage = 0;

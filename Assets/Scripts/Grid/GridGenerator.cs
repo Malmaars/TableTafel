@@ -14,6 +14,7 @@ public class GridGenerator : MonoBehaviour
     public Vector2 gridSize;
     public Vector2 distance;
     public float heightOffset;
+    public Vector3 rotation;
     public GameObject gridPart;
     public tileType type;
 
@@ -42,7 +43,7 @@ public class GridGenerator : MonoBehaviour
                 else
                     yPos = k * distance.y + heightOffset;
 
-                visualTile = Instantiate(gridPart, new Vector3(xPos, 0, yPos), new Quaternion(0, 0, 0, 0));
+                visualTile = Instantiate(gridPart, new Vector3(xPos, 0, yPos), Quaternion.Euler(rotation));
 
 
                 switch (type)

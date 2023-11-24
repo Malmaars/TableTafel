@@ -17,6 +17,7 @@ public class HexagonAreaParent : MonoBehaviour
 
     public fiducialColor thisColor;
     public Material[] materialColors;
+    public Sprite[] colorSprites;
 
     //A hashset to save all the tiles that are currently in the area of this fiducial
     HashSet<ITile> currentSelection;
@@ -79,21 +80,22 @@ public class HexagonAreaParent : MonoBehaviour
 
         if (fiducialController.ScreenPosition.x >= 0.5f)
         {
-            positionXMultiplier = 42f;
+            positionXMultiplier = 37.73f;
         }
         else
         {
-            positionXMultiplier = 36f;
+            positionXMultiplier = 33.7f;
         }
 
         if (fiducialController.ScreenPosition.y >= 0.5f)
         {
-            positionYMultiplier = 30.5f;
+            positionYMultiplier = 25.5f;
         }
         else
         {
-            positionYMultiplier = 24.8f;
+            positionYMultiplier = 25.5f;
         }
+
 
         //to make sure 0,0,0 is the center, we have to subtract half of the multiplier. In reactivision, 0,0 is the upper left corner and 1,1 is the lower right corner.
 
@@ -113,14 +115,14 @@ public class HexagonAreaParent : MonoBehaviour
         {
             return;
         }
-        radius += fiducialController.RotationSpeed * 3;
+        radius += fiducialController.RotationSpeed * Time.deltaTime * 45;
         if (radius > range)
             radius = range;
         else if (radius < 0)
             radius = 0;
 
         currentRotation = fiducialController.angle;
-        maximumFoliage = radius * 3;
+        maximumFoliage = radius * 4;
     }
 
     void HideObject()
@@ -257,72 +259,71 @@ public class HexagonAreaParent : MonoBehaviour
             return;
         }
 
-        //targetTile.visual.GetComponent<MeshRenderer>().material = blue
         switch (thisColor)
         {
             case fiducialColor.blue:
                 if (targetTile.myColor == fiducialColor.red)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[4];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[4];
                     targetTile.myColor = fiducialColor.purple;
                 }
                 else if (targetTile.myColor == fiducialColor.yellow)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[3];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[3];
                     targetTile.myColor = fiducialColor.green;
                 }
                 else if (targetTile.myColor == fiducialColor.orange)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[6];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[6];
                     targetTile.myColor = fiducialColor.black;
                 }
                 else if (targetTile.myColor == fiducialColor.white)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[0];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[0];
                     targetTile.myColor = fiducialColor.blue;
                 }
                 break;
             case fiducialColor.red:
                 if (targetTile.myColor == fiducialColor.blue)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[4];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[4];
                     targetTile.myColor = fiducialColor.purple;
                 }
                 else if (targetTile.myColor == fiducialColor.yellow)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[5];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[5];
                     targetTile.myColor = fiducialColor.orange;
                 }
                 else if (targetTile.myColor == fiducialColor.green)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[6];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[6];
                     targetTile.myColor = fiducialColor.black;
                 }
                 else if (targetTile.myColor == fiducialColor.white)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[1];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[1];
                     targetTile.myColor = fiducialColor.red;
                 }
                 break;
             case fiducialColor.yellow:
                 if (targetTile.myColor == fiducialColor.blue)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[3];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[3];
                     targetTile.myColor = fiducialColor.green;
                 }
                 else if (targetTile.myColor == fiducialColor.red)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[5];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[5];
                     targetTile.myColor = fiducialColor.orange;
                 }
                 else if (targetTile.myColor == fiducialColor.purple)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[6];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[6];
                     targetTile.myColor = fiducialColor.black;
                 }
                 else if (targetTile.myColor == fiducialColor.white)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[2];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[2];
                     targetTile.myColor = fiducialColor.yellow;
                 }
                 break;
@@ -347,66 +348,66 @@ public class HexagonAreaParent : MonoBehaviour
             case fiducialColor.blue:
                 if (targetTile.myColor == fiducialColor.blue)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[7];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[7];
                     targetTile.myColor = fiducialColor.white;
                 }
                 else if (targetTile.myColor == fiducialColor.purple)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[1];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[1];
                     targetTile.myColor = fiducialColor.red;
                 }
                 else if (targetTile.myColor == fiducialColor.green)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[2];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[2];
                     targetTile.myColor = fiducialColor.yellow;
                 }
                 else if (targetTile.myColor == fiducialColor.black)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[5];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[5];
                     targetTile.myColor = fiducialColor.orange;
                 }
                 break;
             case fiducialColor.red:
                 if (targetTile.myColor == fiducialColor.red)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[7];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[7];
                     targetTile.myColor = fiducialColor.white;
                 }
                 else if (targetTile.myColor == fiducialColor.orange)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[2];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[2];
                     targetTile.myColor = fiducialColor.yellow;
                 }
                 else if (targetTile.myColor == fiducialColor.purple)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[0];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[0];
                     targetTile.myColor = fiducialColor.blue;
                 }
                 else if (targetTile.myColor == fiducialColor.black)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[3];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[3];
                     targetTile.myColor = fiducialColor.green;
                 }
                 break;
             case fiducialColor.yellow:
                 if (targetTile.myColor == fiducialColor.yellow)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[7];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[7];
                     targetTile.myColor = fiducialColor.white;
                 }
                 else if (targetTile.myColor == fiducialColor.green)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[0];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[0];
                     targetTile.myColor = fiducialColor.blue;
                 }
                 else if (targetTile.myColor == fiducialColor.orange)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[1];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[1];
                     targetTile.myColor = fiducialColor.red;
                 }
                 else if (targetTile.myColor == fiducialColor.black)
                 {
-                    targetTile.visual.GetComponent<MeshRenderer>().material = materialColors[4];
+                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[4];
                     targetTile.myColor = fiducialColor.purple;
                 }
                 break;
