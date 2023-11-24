@@ -5,7 +5,8 @@ using UnityEngine;
 public class HexagonAreaParent : MonoBehaviour
 {
     //Local fiducial controller, this is necessary to run this class. Make sure it's attached to the same gameobject.
-    private FiducialController fiducialController;
+    //MAKE THIS PRIVATE AFTER 25/11
+    public FiducialController fiducialController;
 
     public GameObject toControl;
 
@@ -20,7 +21,9 @@ public class HexagonAreaParent : MonoBehaviour
     public Sprite[] colorSprites;
 
     //A hashset to save all the tiles that are currently in the area of this fiducial
-    HashSet<ITile> currentSelection;
+
+    //MAKE THIS PRIVATE AFTER 25/11
+    public HashSet<ITile> currentSelection;
     HashSet<ITile> toRemove;
     Vector2 currentHexagonPosition;
     float currentRotation;
