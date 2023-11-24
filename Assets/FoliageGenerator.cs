@@ -47,7 +47,6 @@ public class FoliageGenerator : MonoBehaviour
 
     public foliage GenerateFoliage(fiducialColor _color, Vector3 _position)
     {
-        _position += new Vector3(0, 1, 0);
         Debug.Log("generate Foliage");
         foliage newFoliage = null;
         switch (_color)
@@ -56,10 +55,11 @@ public class FoliageGenerator : MonoBehaviour
                 if (waterFoliage.RequestPoolSize() > 0)
                 {
                     newFoliage = waterFoliage.RequestItem();
-                    newFoliage.visual.transform.position = _position;
+                    newFoliage.visual.transform.position = _position + new Vector3(0, newFoliage.visual.transform.position.y, 0);
                 }
                 else
                 {
+                    _position += new Vector3(0, waterFoliagePrefabs[currentWaterFoliage].transform.position.y, 0);
                     Quaternion newRotation = Quaternion.Euler(new Vector3(waterFoliagePrefabs[currentWaterFoliage].transform.rotation.eulerAngles.x, 0, Random.Range(0, 360f)));
                     newFoliage = new foliage(Instantiate(waterFoliagePrefabs[currentWaterFoliage], _position, newRotation), fiducialColor.blue);
                     currentWaterFoliage++;
@@ -72,10 +72,11 @@ public class FoliageGenerator : MonoBehaviour
                 if (grassFoliage.RequestPoolSize() > 0)
                 {
                     newFoliage = grassFoliage.RequestItem();
-                    newFoliage.visual.transform.position = _position;
+                    newFoliage.visual.transform.position = _position + new Vector3(0,newFoliage.visual.transform.position.y,0);
                 }
                 else
                 {
+                    _position += new Vector3(0, grassFoliagePrefabs[currentGrassFoliage].transform.position.y, 0);
                     Quaternion newRotation = Quaternion.Euler(new Vector3(grassFoliagePrefabs[currentGrassFoliage].transform.rotation.eulerAngles.x, 0, Random.Range(0, 360f)));
                     newFoliage = new foliage(Instantiate(grassFoliagePrefabs[currentGrassFoliage], _position, newRotation), fiducialColor.red);
                     currentGrassFoliage++;
@@ -88,10 +89,11 @@ public class FoliageGenerator : MonoBehaviour
                 if (sandFoliage.RequestPoolSize() > 0)
                 {
                     newFoliage = sandFoliage.RequestItem();
-                    newFoliage.visual.transform.position = _position;
+                    newFoliage.visual.transform.position = _position + new Vector3(0, newFoliage.visual.transform.position.y, 0);
                 }
                 else
                 {
+                    _position += new Vector3(0, sandFoliagePrefabs[currentSandFoliage].transform.position.y, 0);
                     Quaternion newRotation = Quaternion.Euler(new Vector3(sandFoliagePrefabs[currentSandFoliage].transform.rotation.eulerAngles.x, 0, Random.Range(0, 360f)));
                     newFoliage = new foliage(Instantiate(sandFoliagePrefabs[currentSandFoliage], _position, newRotation), fiducialColor.yellow);
                     currentSandFoliage++;
