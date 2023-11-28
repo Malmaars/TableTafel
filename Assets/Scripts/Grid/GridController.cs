@@ -68,4 +68,35 @@ public class GridController : MonoBehaviour
             }
         }
     }
+
+    //ask for a tile in a specific direction. The direction will be an int from 1 to 6, instead of a vector2, since it differens if a hexagon is on even or odd position
+    public ITile checkTileInWorldDirection(ITile _origin, int direction)
+    {
+
+        switch (direction)
+        {
+            case 1:
+                return Grid[_origin.position.x, _origin.position.y + 1];
+            case 2:
+                if(_origin.position.x % 2 == 0)
+                {
+
+                }
+                else
+                {
+
+                }
+
+                break;
+            case 3:
+                break;
+            case 4:
+                return Grid[_origin.position.x, _origin.position.y - 1];
+            case 5:
+                break;
+            case 6:
+                break;
+        }
+        return null;
+    }
 }

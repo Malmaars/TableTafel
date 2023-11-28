@@ -27,9 +27,9 @@ public class GridGenerator : MonoBehaviour
     {
         gridArray = new ITile[(int)gridSize.x, (int)gridSize.y];
        //generate the Cubes
-       for(float i = 0; i < gridSize.x; i++)
+       for(int i = 0; i < gridSize.x; i++)
         {
-            for(float k = 0; k < gridSize.y; k++)
+            for(int k = 0; k < gridSize.y; k++)
             {
                 GameObject visualTile;
 
@@ -49,7 +49,7 @@ public class GridGenerator : MonoBehaviour
                 switch (type)
                 {
                     case tileType.hexagon:
-                        gridArray[(int)i, (int)k] = new Hexagon(new Vector2(i, k), visualTile, fiducialColor.white);
+                        gridArray[(int)i, (int)k] = new Hexagon(new Vector2Int(i, k), visualTile, fiducialColor.white);
                         if (debugMode)
                         {
                             Instantiate(debugVisual, visualTile.transform);

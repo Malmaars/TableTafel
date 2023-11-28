@@ -22,15 +22,20 @@ public class Animal : MonoBehaviour
 
     //make a function to move to a target and chill there
 
+    private void Start()
+    {
+        visual = this.gameObject;
+    }
+
     public void SetDestination(ITile newTarget)
     {
         myAnimator.SetBool("Still", false);
         currentTarget = newTarget;
-        destination = newTarget.position;
-        Vector2 direction = new Vector2(destination.x, destination.z) - new Vector2(visual.transform.position.x, visual.transform.position.z);
-        visual.transform.up = direction.normalized;
-    }
+        destination = newTarget.visual.transform.position;
+        Vector3 direction = new Vector3(destination.x, 0, destination.z) - new Vector3(visual.transform.position.x, 0, visual.transform.position.z);
+        visual.transform.forward = direction.normalized;
 
+    }
     private void Update()
     {
         if (destination != null && hexagonParent.fiducialController.isVisible)
@@ -45,20 +50,23 @@ public class Animal : MonoBehaviour
 
     public void WalkToDestination()
     {
-        if(currentTarget.myColor != targetColor)
+        if(currentTarget == null || currentTarget.myColor != targetColor)
         {
             //set new destination
             ITile[] tileArray = new ITile[hexagonParent.currentSelection.Count];
             hexagonParent.currentSelection.CopyTo(tileArray);
 
-            int randomTileNumber = Random.Range(0, tileArray.Length);
-            SetDestination(tileArray[randomTileNumber]);
-            waiting = false;
-            waitTimer = 0;
+            if (tileArray.Length != 0)
+            {
+                int randomTileNumber = Random.Range(0, tileArray.Length);
+                SetDestination(tileArray[randomTileNumber]);
+                waiting = false;
+                waitTimer = 0;
+            }
         }
-        if (Vector3.Distance(visual.transform.position, destination) > 0.1f)
+        if (Vector3.Distance(visual.transform.position, destination) > 1f)
         {
-            visual.transform.position = Vector3.Lerp(visual.transform.position, destination, moveSpeed * Time.deltaTime);
+            visual.transform.position = Vector3.Lerp(visual.transform.position, new Vector3(destination.x, visual.transform.position.y, destination.z), moveSpeed * Time.deltaTime);
         }
         else
         {
@@ -67,7 +75,7 @@ public class Animal : MonoBehaviour
                 myAnimator.SetBool("Still", true);
                 waiting = true;
                 waitTimer = 0;
-                waitTime = Random.Range(3f, 10f);
+                waitTime = Random.Range(1f, 2f);
             }
 
             else
