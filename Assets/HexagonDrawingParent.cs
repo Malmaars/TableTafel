@@ -144,6 +144,7 @@ public class HexagonDrawingParent : MonoBehaviour
         {
             if (!CheckArea().Contains(item))
             {
+                ResetHexagon(item);
                 toRemove.Add(item);
                 continue;
             }
@@ -243,6 +244,10 @@ public class HexagonDrawingParent : MonoBehaviour
 
     void LeaveArea()
     {
+        foreach (ITile item in currentSelection)
+        {
+            ResetHexagon(item);
+        }
         currentSelection.Clear();
     }
 
@@ -268,11 +273,13 @@ public class HexagonDrawingParent : MonoBehaviour
 
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[1];
                     targetTile.myColor = fiducialColor.red;
-               
+                
                 break;
             case fiducialColor.yellow:
+
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[2];
                     targetTile.myColor = fiducialColor.yellow;
+                
                 break;
         }
 
@@ -285,6 +292,16 @@ public class HexagonDrawingParent : MonoBehaviour
                 targetTile.foliage = foliageGenerator.GenerateFoliage(thisColor, targetTile.visual.transform.position);
                 currentFoliage++;
             }
+        }
+    }
+
+    void ResetHexagon(ITile targetTile)
+    {
+        if (targetTile.foliage != null && targetTile.foliage.foliageColor == thisColor)
+        {
+            foliageGenerator.RemoveFoliage(targetTile.foliage);
+            targetTile.foliage = null;
+            currentFoliage--;
         }
     }
 }
