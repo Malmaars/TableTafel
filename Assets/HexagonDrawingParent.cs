@@ -297,7 +297,7 @@ public class HexagonDrawingParent : MonoBehaviour
 
     void ResetHexagon(ITile targetTile)
     {
-        if (targetTile.foliage != null && targetTile.foliage.foliageColor == thisColor)
+        if (targetTile.foliage != null && targetTile.foliage.foliageColor != thisColor)
         {
             foliageGenerator.RemoveFoliage(targetTile.foliage);
             targetTile.foliage = null;
