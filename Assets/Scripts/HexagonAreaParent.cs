@@ -75,7 +75,7 @@ public class HexagonAreaParent : MonoBehaviour
 
             RotateSomething();
             CheckIfChange();
-            foreach(ITile item in CheckArea())
+            foreach (ITile item in CheckArea())
             {
                 if (!currentSelection.Contains(item))
                     ChangeHexagon(item);
@@ -85,6 +85,7 @@ public class HexagonAreaParent : MonoBehaviour
 
     void CheckIfChange()
     {
+        return;
         if (fiducialController.speed > 0.05f)
         {
             loadingCircle.fillAmount = 0;
@@ -94,10 +95,10 @@ public class HexagonAreaParent : MonoBehaviour
 
         else
         {
-            
+
             changeTimer += Time.deltaTime;
             loadingCircle.fillAmount = timeUntilChange / changeTimer;
-            if(changeTimer >= timeUntilChange && !willChange)
+            if (changeTimer >= timeUntilChange && !willChange)
             {
                 loadingCircle.fillAmount = 0;
                 //change the surrounding tiles
@@ -139,7 +140,7 @@ public class HexagonAreaParent : MonoBehaviour
 
     void RotateSomething()
     {
-        if(currentRotation != fiducialController.angle)
+        if (currentRotation != fiducialController.angle)
         {
             CompareCurrentTiles();
         }
@@ -169,9 +170,9 @@ public class HexagonAreaParent : MonoBehaviour
 
     void CompareCurrentTiles()
     {
-        foreach(ITile item in currentSelection)
+        foreach (ITile item in currentSelection)
         {
-            if(!CheckArea().Contains(item))
+            if (!CheckArea().Contains(item))
             {
                 ResetHexagon(item);
                 toRemove.Add(item);
@@ -179,7 +180,7 @@ public class HexagonAreaParent : MonoBehaviour
             }
         }
 
-        foreach(ITile item in toRemove)
+        foreach (ITile item in toRemove)
         {
             currentSelection.Remove(item);
         }
@@ -285,6 +286,7 @@ public class HexagonAreaParent : MonoBehaviour
         if (!currentSelection.Contains(targetTile))
         {
             currentSelection.Add(targetTile);
+            StartCoroutine(AnimateTile(targetTile));
         }
         else
         {
@@ -445,7 +447,7 @@ public class HexagonAreaParent : MonoBehaviour
                 break;
         }
 
-        if(targetTile.foliage != null && targetTile.foliage.foliageColor == thisColor)
+        if (targetTile.foliage != null && targetTile.foliage.foliageColor == thisColor)
         {
             foliageGenerator.RemoveFoliage(targetTile.foliage);
             targetTile.foliage = null;
@@ -455,6 +457,22 @@ public class HexagonAreaParent : MonoBehaviour
 
     IEnumerator AnimateTile(ITile _tile)
     {
-        return null;
+        Vector3 oldTransform = _tile.visual.transform.localScale;
+
+        Vector3 target = _tile.visual.transform.localScale * 2;
+        _tile.visual.transform.position += new Vector3(0, 1, 0);
+        while(_tile.visual.transform.localScale != target)
+        {
+            _tile.visual.transform.localScale = Vector3.Lerp(_tile.visual.transform.localScale, target, Time.deltaTime * 50);
+            yield return null; // Pause and resume on the next frame
+        }
+
+        while (_tile.visual.transform.localScale != oldTransform)
+        {
+            _tile.visual.transform.localScale = Vector3.Lerp(_tile.visual.transform.localScale, oldTransform, Time.deltaTime * 20);
+            yield return null; // Pause and resume on the next frame
+        }
+        _tile.visual.transform.position -= new Vector3(0, 1, 0);
+        _tile.visual.transform.localScale = oldTransform;
     }
 }
