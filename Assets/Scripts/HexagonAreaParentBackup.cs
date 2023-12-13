@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class HexagonAreaParent : MonoBehaviour
+public class HexagonAreaParentBackup : MonoBehaviour
 {
     //Local fiducial controller, this is necessary to run this class. Make sure it's attached to the same gameobject.
     //MAKE THIS PRIVATE AFTER 25/11
@@ -17,10 +16,6 @@ public class HexagonAreaParent : MonoBehaviour
     public float positionXMultiplier;
     public float positionYMultiplier;
 
-    public Image loadingCircle;
-    public float timeUntilChange;
-    bool willChange;
-    float changeTimer;
 
     public fiducialColor thisColor;
     public Material[] materialColors;
@@ -74,33 +69,10 @@ public class HexagonAreaParent : MonoBehaviour
             }
 
             RotateSomething();
-            CheckIfChange();
             foreach(ITile item in CheckArea())
             {
                 if (!currentSelection.Contains(item))
                     ChangeHexagon(item);
-            }
-        }
-    }
-
-    void CheckIfChange()
-    {
-        if (fiducialController.speed > 0.05f)
-        {
-            loadingCircle.fillAmount = 0;
-            willChange = true;
-            changeTimer = 0;
-        }
-
-        else
-        {
-            
-            changeTimer += Time.deltaTime;
-            loadingCircle.fillAmount = timeUntilChange / changeTimer;
-            if(changeTimer >= timeUntilChange && !willChange)
-            {
-                loadingCircle.fillAmount = 0;
-                //change the surrounding tiles
             }
         }
     }
@@ -451,10 +423,5 @@ public class HexagonAreaParent : MonoBehaviour
             targetTile.foliage = null;
             currentFoliage--;
         }
-    }
-
-    IEnumerator AnimateTile(ITile _tile)
-    {
-        return null;
     }
 }
