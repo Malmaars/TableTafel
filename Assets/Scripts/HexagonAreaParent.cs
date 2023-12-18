@@ -303,6 +303,7 @@ public class HexagonAreaParent : MonoBehaviour
         foreach (ITile item in currentSelection)
         {
             ResetHexagon(item);
+            AnimateTile(item);
         }
         currentSelection.Clear();
     }
