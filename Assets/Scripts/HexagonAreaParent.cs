@@ -11,17 +11,23 @@ public class HexagonAreaParent : MonoBehaviour
 
     public GameObject toControl;
 
+    [Header("Modifiable Grid Values")]
     public int range;
     float radius;
 
     public float positionXMultiplier;
     public float positionYMultiplier;
 
+    [Header("Expanding Settings")]
     public Image loadingCircle;
     public float timeUntilChange;
-    bool willChange;
+    bool willChange = true;
+    bool changing;
     float changeTimer;
+    public float SizeTimer;
 
+
+    [Header("Colors")]
     public fiducialColor thisColor;
     public Material[] materialColors;
     public Sprite[] colorSprites;
@@ -31,6 +37,7 @@ public class HexagonAreaParent : MonoBehaviour
     //MAKE THIS PRIVATE AFTER 25/11
     public HashSet<ITile> currentSelection;
     HashSet<ITile> toRemove;
+    //the current position the fiducial is at
     Vector2 currentHexagonPosition;
     float currentRotation;
 
@@ -46,7 +53,7 @@ public class HexagonAreaParent : MonoBehaviour
         foliageGenerator = FindObjectOfType<FoliageGenerator>();
         toRemove = new HashSet<ITile>();
         currentSelection = new HashSet<ITile>();
-        radius = range / 2;
+        //radius = range / 2;
         fiducialController = GetComponent<FiducialController>();
     }
 
@@ -59,22 +66,27 @@ public class HexagonAreaParent : MonoBehaviour
         }
         else if (!fiducialController.isVisible && toControl.activeSelf == true)
         {
-            LeaveArea();
+            //LeaveArea();
             HideObject();
+            loadingCircle.fillAmount = 0;
         }
 
         if (fiducialController.IsVisible && toControl.activeSelf)
         {
             ApplyTransform();
 
-            Vector2 checkPosition = BlackBoard.gridController.ConvertWorldPositionToHexagonPosition(new Vector2(toControl.transform.position.x, toControl.transform.position.z));
-            if (currentHexagonPosition.x != checkPosition.x || currentHexagonPosition.y != checkPosition.y)
-            {
-                CompareCurrentTiles();
-            }
+            //Vector2 checkPosition = BlackBoard.gridController.ConvertWorldPositionToHexagonPosition(new Vector2(toControl.transform.position.x, toControl.transform.position.z));
+            //if (currentHexagonPosition.x != checkPosition.x || currentHexagonPosition.y != checkPosition.y)
+            //{
+            //    CompareCurrentTiles();
+            //}
 
-            RotateSomething();
+            //RotateSomething();
             CheckIfChange();
+        }
+
+        if (changing)
+        {
             foreach (ITile item in CheckArea())
             {
                 if (!currentSelection.Contains(item))
@@ -85,23 +97,29 @@ public class HexagonAreaParent : MonoBehaviour
 
     void CheckIfChange()
     {
-        return;
-        if (fiducialController.speed > 0.05f)
+        if (fiducialController.speed > 0f)
         {
             loadingCircle.fillAmount = 0;
             willChange = true;
             changeTimer = 0;
         }
 
-        else
+        else if (willChange && !changing)
         {
-
             changeTimer += Time.deltaTime;
-            loadingCircle.fillAmount = timeUntilChange / changeTimer;
-            if (changeTimer >= timeUntilChange && !willChange)
+            loadingCircle.fillAmount = changeTimer / timeUntilChange;
+            if (changeTimer >= timeUntilChange)
             {
+                changing = true;
+                LeaveArea();
+                CompareCurrentTiles();
+                Debug.Log("Start change");
+
                 loadingCircle.fillAmount = 0;
                 //change the surrounding tiles
+                radius = 0;
+                StartCoroutine(IncreaseSize());
+                willChange = false;
             }
         }
     }
@@ -132,10 +150,14 @@ public class HexagonAreaParent : MonoBehaviour
 
         //to make sure 0,0,0 is the center, we have to subtract half of the multiplier. In reactivision, 0,0 is the upper left corner and 1,1 is the lower right corner.
 
-        //The input from reactivision is widescreen, so 0-1 in width has a much bigger difference than 0-1 in height. To combat this, I divide them by the screenwidth (which I think is 1920x1080)
-        Vector3 newPosition = new Vector3(-fiducialController.screenPosition.x * positionXMultiplier + positionXMultiplier / 2, toControl.transform.position.y, -fiducialController.screenPosition.y * positionYMultiplier + positionYMultiplier / 2);
-        toControl.transform.position = newPosition + BlackBoard.offset;
-        toControl.transform.rotation = Quaternion.Euler(0, -fiducialController.angleDegrees, 0);
+        if (!changing)
+        {
+            //The input from reactivision is widescreen, so 0-1 in width has a much bigger difference than 0-1 in height. To combat this, I divide them by the screenwidth (which I think is 1920x1080)
+            Vector3 newPosition = new Vector3(-fiducialController.screenPosition.x * positionXMultiplier + positionXMultiplier / 2, toControl.transform.position.y, -fiducialController.screenPosition.y * positionYMultiplier + positionYMultiplier / 2);
+            toControl.transform.position = newPosition + BlackBoard.offset;
+            toControl.transform.rotation = Quaternion.Euler(0, -fiducialController.angleDegrees, 0);
+            loadingCircle.transform.position = newPosition + BlackBoard.offset;
+        }
     }
 
     void RotateSomething()
@@ -188,14 +210,18 @@ public class HexagonAreaParent : MonoBehaviour
     }
 
     HashSet<ITile> CheckArea()
-    {
+    {        
+
+        if (radius == 0)
+        {
+            return new HashSet<ITile>();
+        }
         HashSet<ITile> newSelection = new HashSet<ITile>();
 
         //get the hexagon position of the object
         Vector2 positionOnGrid = BlackBoard.gridController.ConvertWorldPositionToHexagonPosition(new Vector2(toControl.transform.position.x, toControl.transform.position.z));
         int xGridPos = Mathf.RoundToInt(positionOnGrid.x);
         int yGridPos = Mathf.RoundToInt(positionOnGrid.y);
-
         currentHexagonPosition = new Vector2(xGridPos, yGridPos);
 
         for (int i = -Mathf.RoundToInt(radius); i <= Mathf.RoundToInt(radius); i++)
@@ -457,9 +483,9 @@ public class HexagonAreaParent : MonoBehaviour
 
     IEnumerator AnimateTile(ITile _tile)
     {
-        Vector3 oldTransform = _tile.visual.transform.localScale;
+        Vector3 oldTransform = _tile.originalSize;
 
-        Vector3 target = _tile.visual.transform.localScale * 2;
+        Vector3 target = oldTransform * 2;
         _tile.visual.transform.position += new Vector3(0, 1, 0);
         while(_tile.visual.transform.localScale != target)
         {
@@ -474,5 +500,25 @@ public class HexagonAreaParent : MonoBehaviour
         }
         _tile.visual.transform.position -= new Vector3(0, 1, 0);
         _tile.visual.transform.localScale = oldTransform;
+    }
+
+    IEnumerator IncreaseSize()
+    {
+        float timer = 0;
+
+        while(radius < range)
+        {
+            timer += Time.deltaTime;
+            
+            if(timer > SizeTimer)
+            {
+                timer = 0;
+                radius++;
+            }
+
+            yield return null;
+        }
+
+        changing = false;
     }
 }

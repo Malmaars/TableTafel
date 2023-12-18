@@ -12,6 +12,8 @@ public interface ITile
     public fiducialColor myColor { get; set; }
 
     public foliage foliage { get; set; }
+
+    public Vector3 originalSize { get; set; }
 }
 
 public class Hexagon : ITile
@@ -22,12 +24,16 @@ public class Hexagon : ITile
         position = _position;
         visual = _visual;
         myColor = _color;
+
+        originalSize = _visual.transform.localScale;
     }
 
     public Vector2Int position { get; set; }
     public GameObject visual { get; set; }
     public fiducialColor myColor { get; set; }
     public foliage foliage { get; set; }
+
+    public Vector3 originalSize { get; set; }
 
     public void ChangePosition(Vector2 _offset)
     {
