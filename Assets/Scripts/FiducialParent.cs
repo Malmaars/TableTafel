@@ -13,10 +13,19 @@ public enum fiducialColor
     mixed,
     wasteland,
 
+    //double mixes
     sandwater,
     savannah,
     watergrass,
-    ice
+    ice,
+    bamboograss,
+    bamboowater,
+    savannahgrass,
+    savannahwater,
+    savnnahsand,
+    snowgrass,
+    snowbamboo,
+    snowsand,
 }
 
 public class FiducialParent : MonoBehaviour

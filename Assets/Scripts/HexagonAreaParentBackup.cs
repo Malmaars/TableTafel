@@ -63,12 +63,12 @@ public class HexagonAreaParentBackup : MonoBehaviour
             ApplyTransform();
 
             Vector2 checkPosition = BlackBoard.gridController.ConvertWorldPositionToHexagonPosition(new Vector2(toControl.transform.position.x, toControl.transform.position.z));
-            if (currentHexagonPosition.x != checkPosition.x || currentHexagonPosition.y != checkPosition.y)
-            {
-                CompareCurrentTiles();
-            }
+            //if (currentHexagonPosition.x != checkPosition.x || currentHexagonPosition.y != checkPosition.y)
+            //{
+            //    CompareCurrentTiles();
+            //}
 
-            RotateSomething();
+            //RotateSomething();
             foreach(ITile item in CheckArea())
             {
                 if (!currentSelection.Contains(item))
@@ -111,15 +111,15 @@ public class HexagonAreaParentBackup : MonoBehaviour
 
     void RotateSomething()
     {
-        if(currentRotation != fiducialController.angle)
-        {
-            CompareCurrentTiles();
-        }
+        //if(currentRotation != fiducialController.angle)
+        //{
+        //    CompareCurrentTiles();
+        //}
         if (fiducialController.Speed > 0.05f)
         {
             return;
         }
-        radius += fiducialController.RotationSpeed * Time.deltaTime * 45;
+        radius += fiducialController.RotationSpeed * Time.deltaTime * 1;
         if (radius > range)
             radius = range;
         else if (radius < 0)
@@ -171,6 +171,7 @@ public class HexagonAreaParentBackup : MonoBehaviour
 
         for (int i = -Mathf.RoundToInt(radius); i <= Mathf.RoundToInt(radius); i++)
         {
+            Debug.Log(radius);
             ITile targetTile = BlackBoard.gridController.Grid[xGridPos, yGridPos + i];
             newSelection.Add(targetTile);
         }
@@ -245,10 +246,6 @@ public class HexagonAreaParentBackup : MonoBehaviour
 
     void LeaveArea()
     {
-        foreach (ITile item in currentSelection)
-        {
-            ResetHexagon(item);
-        }
         currentSelection.Clear();
     }
 
@@ -257,171 +254,105 @@ public class HexagonAreaParentBackup : MonoBehaviour
         if (!currentSelection.Contains(targetTile))
         {
             currentSelection.Add(targetTile);
+            StartCoroutine(AnimateTile(targetTile));
         }
         else
         {
             return;
         }
 
+        bool spawnFoliage = true;
         switch (thisColor)
         {
             case fiducialColor.water:
-                if (targetTile.myColor == fiducialColor.sand)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[4];
-                    targetTile.myColor = fiducialColor.tundra;
-                }
-                else if (targetTile.myColor == fiducialColor.snow)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[3];
-                    targetTile.myColor = fiducialColor.grass;
-                }
-                else if (targetTile.myColor == fiducialColor.bamboo)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[6];
-                    targetTile.myColor = fiducialColor.mixed;
-                }
-                else if (targetTile.myColor == fiducialColor.wasteland)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[0];
-                    targetTile.myColor = fiducialColor.water;
-                }
+                    EditTile(targetTile, fiducialColor.water, 0);
+
                 break;
             case fiducialColor.sand:
-                if (targetTile.myColor == fiducialColor.water)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[4];
-                    targetTile.myColor = fiducialColor.tundra;
-                }
-                else if (targetTile.myColor == fiducialColor.snow)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[5];
-                    targetTile.myColor = fiducialColor.bamboo;
-                }
-                else if (targetTile.myColor == fiducialColor.grass)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[6];
-                    targetTile.myColor = fiducialColor.mixed;
-                }
-                else if (targetTile.myColor == fiducialColor.wasteland)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[1];
-                    targetTile.myColor = fiducialColor.sand;
-                }
+                    EditTile(targetTile, fiducialColor.sand, 1);
+
+                break;
+            case fiducialColor.grass:
+                    EditTile(targetTile, fiducialColor.grass, 2);
+
                 break;
             case fiducialColor.snow:
-                if (targetTile.myColor == fiducialColor.water)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[3];
-                    targetTile.myColor = fiducialColor.grass;
-                }
-                else if (targetTile.myColor == fiducialColor.sand)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[5];
-                    targetTile.myColor = fiducialColor.bamboo;
-                }
-                else if (targetTile.myColor == fiducialColor.tundra)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[6];
-                    targetTile.myColor = fiducialColor.mixed;
-                }
-                else if (targetTile.myColor == fiducialColor.wasteland)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[2];
-                    targetTile.myColor = fiducialColor.snow;
-                }
+                    EditTile(targetTile, fiducialColor.snow, 3);
+
+                break;
+            case fiducialColor.savannah:
+                    EditTile(targetTile, fiducialColor.savannah, 9);
+
+                break;
+            case fiducialColor.bamboo:
+                    EditTile(targetTile, fiducialColor.bamboo, 5);
+
                 break;
         }
 
-        if (targetTile.foliage == null && currentFoliage < maximumFoliage)
+        if (targetTile.foliage != null)
         {
-            int randomInt = Random.Range(0, 20);
-            if (randomInt == 0)
-            {
-                //create new foliage
-                targetTile.foliage = foliageGenerator.GenerateFoliage(thisColor, targetTile.visual.transform.position);
-                currentFoliage++;
-            }
+            //remove the foliage, throw the gameobject in the object pool
+            StartCoroutine(foliageGenerator.RemoveFoliage(targetTile.foliage));
+            targetTile.foliage = null;
         }
+
+        int randomint = Random.Range(0, 30);
+        if (randomint == 0 && spawnFoliage)
+        {
+            //create new foliage
+            targetTile.foliage = foliageGenerator.GenerateFoliage(thisColor, targetTile.visual.transform.position);
+            currentFoliage++;
+        }
+
     }
 
     void ResetHexagon(ITile targetTile)
     {
-        switch (thisColor)
-        {
-            case fiducialColor.water:
-                if (targetTile.myColor == fiducialColor.water)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[7];
-                    targetTile.myColor = fiducialColor.wasteland;
-                }
-                else if (targetTile.myColor == fiducialColor.tundra)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[1];
-                    targetTile.myColor = fiducialColor.sand;
-                }
-                else if (targetTile.myColor == fiducialColor.grass)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[2];
-                    targetTile.myColor = fiducialColor.snow;
-                }
-                else if (targetTile.myColor == fiducialColor.mixed)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[5];
-                    targetTile.myColor = fiducialColor.bamboo;
-                }
-                break;
-            case fiducialColor.sand:
-                if (targetTile.myColor == fiducialColor.sand)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[7];
-                    targetTile.myColor = fiducialColor.wasteland;
-                }
-                else if (targetTile.myColor == fiducialColor.bamboo)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[2];
-                    targetTile.myColor = fiducialColor.snow;
-                }
-                else if (targetTile.myColor == fiducialColor.tundra)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[0];
-                    targetTile.myColor = fiducialColor.water;
-                }
-                else if (targetTile.myColor == fiducialColor.mixed)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[3];
-                    targetTile.myColor = fiducialColor.grass;
-                }
-                break;
-            case fiducialColor.snow:
-                if (targetTile.myColor == fiducialColor.snow)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[7];
-                    targetTile.myColor = fiducialColor.wasteland;
-                }
-                else if (targetTile.myColor == fiducialColor.grass)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[0];
-                    targetTile.myColor = fiducialColor.water;
-                }
-                else if (targetTile.myColor == fiducialColor.bamboo)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[1];
-                    targetTile.myColor = fiducialColor.sand;
-                }
-                else if (targetTile.myColor == fiducialColor.mixed)
-                {
-                    targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[4];
-                    targetTile.myColor = fiducialColor.tundra;
-                }
-                break;
-        }
-
+        EditTile(targetTile, fiducialColor.wasteland, 7);
         if (targetTile.foliage != null && targetTile.foliage.foliageColor == thisColor)
         {
-            foliageGenerator.RemoveFoliage(targetTile.foliage);
+            StartCoroutine(foliageGenerator.RemoveFoliage(targetTile.foliage));
             targetTile.foliage = null;
             currentFoliage--;
         }
+    }
+
+
+    void EditTile(ITile _toEdit, fiducialColor newColor, int spriteIndex)
+    {
+        BlackBoard.UnAssignTile(_toEdit);
+        _toEdit.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[spriteIndex];
+        _toEdit.myColor = newColor;
+        BlackBoard.AssignTile(_toEdit);
+    }
+
+    IEnumerator AnimateTile(ITile _tile)
+    {
+        while (_tile.beingAnimated)
+        {
+            //wait
+            yield return null;
+        }
+
+        _tile.beingAnimated = true;
+        Vector3 oldTransform = _tile.originalSize;
+
+        Vector3 target = oldTransform * 2;
+        _tile.visual.transform.position += new Vector3(0, 1, 0);
+        while (_tile.visual.transform.localScale != target)
+        {
+            _tile.visual.transform.localScale = Vector3.Lerp(_tile.visual.transform.localScale, target, Time.deltaTime * 50);
+            yield return null; // Pause and resume on the next frame
+        }
+
+        while (_tile.visual.transform.localScale != oldTransform)
+        {
+            _tile.visual.transform.localScale = Vector3.Lerp(_tile.visual.transform.localScale, oldTransform, Time.deltaTime * 20);
+            yield return null; // Pause and resume on the next frame
+        }
+        _tile.visual.transform.position -= new Vector3(0, 1, 0);
+        _tile.visual.transform.localScale = oldTransform;
+        _tile.beingAnimated = false;
     }
 }
