@@ -441,6 +441,13 @@ public class HexagonGrowingParent : MonoBehaviour
                 break;
         }
 
+        if (targetTile.foliage != null)
+        {
+            //remove the foliage, throw the gameobject in the object pool
+            foliageGenerator.RemoveFoliage(targetTile.foliage);
+            targetTile.foliage = null;
+        }
+
         int randomint = Random.Range(0, 20);
         if (randomint == 0)
         {
@@ -456,10 +463,94 @@ public class HexagonGrowingParent : MonoBehaviour
         if(targetTile.foliage != null)
         {
             //remove the foliage, throw the gameobject in the object pool
+            foliageGenerator.RemoveFoliage(targetTile.foliage);
+            targetTile.foliage = null;
         }
-        BlackBoard.UnAssignTile(targetTile);
-        EditTile(targetTile, fiducialColor.wasteland, 7);
-        BlackBoard.AssignTile(targetTile);
+
+        
+
+        switch (thisColor)
+        {
+            case fiducialColor.water:
+                switch (targetTile.myColor)
+                {
+                    case fiducialColor.water:
+                        EditTile(targetTile, fiducialColor.wasteland, 7);
+                        break;
+                    case fiducialColor.watergrass:
+                        EditTile(targetTile, fiducialColor.grass, 2);
+                        break;
+                    case fiducialColor.sandwater:
+                        EditTile(targetTile, fiducialColor.sand, 1);
+                        break;
+                }
+                break;
+            case fiducialColor.grass:
+                switch (targetTile.myColor)
+                {
+                    case fiducialColor.grass:
+                        EditTile(targetTile, fiducialColor.wasteland, 7);
+                        break;
+                    case fiducialColor.watergrass:
+                        EditTile(targetTile, fiducialColor.water, 0);
+                        break;
+                    case fiducialColor.tundra:
+                        EditTile(targetTile, fiducialColor.sand, 1);
+                        break;
+                }
+                break;
+            case fiducialColor.sand:
+                switch (targetTile.myColor)
+                {
+                    case fiducialColor.sand:
+                        EditTile(targetTile, fiducialColor.wasteland, 7);
+                        break;
+                    case fiducialColor.tundra:
+                        EditTile(targetTile, fiducialColor.grass, 2);
+                        break;
+                    case fiducialColor.sandwater:
+                        EditTile(targetTile, fiducialColor.water, 1);
+                        break;
+                }
+                break;
+            case fiducialColor.snow:
+                switch (targetTile.myColor)
+                {
+                    case fiducialColor.snow:
+                        EditTile(targetTile, fiducialColor.wasteland, 7);
+                        break;
+                }
+                break;
+            case fiducialColor.bamboo:
+                switch (targetTile.myColor)
+                {
+                    case fiducialColor.bamboo:
+                        EditTile(targetTile, fiducialColor.wasteland, 7);
+                        break;
+                    case fiducialColor.watergrass:
+                        EditTile(targetTile, fiducialColor.water, 0);
+                        break;
+                    case fiducialColor.tundra:
+                        EditTile(targetTile, fiducialColor.sand, 1);
+                        break;
+                }
+                break;
+            case fiducialColor.savannah:
+                switch (targetTile.myColor)
+                {
+                    case fiducialColor.savannah:
+                        EditTile(targetTile, fiducialColor.wasteland, 7);
+                        break;
+                    case fiducialColor.tundra:
+                        EditTile(targetTile, fiducialColor.grass, 2);
+                        break;
+                    case fiducialColor.sandwater:
+                        EditTile(targetTile, fiducialColor.water, 0);
+                        break;
+                }
+                break;
+
+        }
     }
 
     void EditTile(ITile _toEdit, fiducialColor newColor, int spriteIndex)
@@ -507,8 +598,6 @@ public class HexagonGrowingParent : MonoBehaviour
 
             yield return null;
         }
-
-        //spawn the foliage
 
         changing = false;
     }

@@ -62,6 +62,9 @@ public class Animal : MonoBehaviour
                 if (!CheckTileList(colorToGoTo))
                 {
                     currentTargetIndex++;
+
+                    if (currentTargetIndex >= targetColor.Length)
+                        currentTargetIndex = 0;
                 }
                 colorToGoTo = targetColor[currentTargetIndex];
             }
