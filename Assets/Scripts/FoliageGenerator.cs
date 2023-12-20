@@ -16,6 +16,9 @@ public class foliage : IPoolable
 
     public fiducialColor foliageColor;
     public GameObject visual { get; set; }
+
+    public bool beingAnimated;
+
     public bool active { get; set; }
     public void OnEnableObject()
     {
@@ -217,6 +220,13 @@ public class FoliageGenerator : MonoBehaviour
 
     IEnumerator AnimateFoliage(foliage _foliage)
     {
+        while (_foliage.beingAnimated)
+        {
+            //wait
+            yield return null;
+        }
+
+        _foliage.beingAnimated = true;
         Vector3 oldTransform = _foliage.originalSize;
         
         Vector3 target = oldTransform * 2;
@@ -234,5 +244,6 @@ public class FoliageGenerator : MonoBehaviour
         }
         _foliage.visual.transform.position -= new Vector3(0, 1, 0);
         _foliage.visual.transform.localScale = oldTransform;
+        _foliage.beingAnimated = false;
     }
 }

@@ -558,6 +558,13 @@ public class HexagonGrowingParent : MonoBehaviour
 
     IEnumerator AnimateTile(ITile _tile)
     {
+        while (_tile.beingAnimated)
+        {
+            //wait
+            yield return null;
+        }
+
+        _tile.beingAnimated = true;
         Vector3 oldTransform = _tile.originalSize;
 
         Vector3 target = oldTransform * 2;
@@ -575,6 +582,7 @@ public class HexagonGrowingParent : MonoBehaviour
         }
         _tile.visual.transform.position -= new Vector3(0, 1, 0);
         _tile.visual.transform.localScale = oldTransform;
+        _tile.beingAnimated = false;
     }
 
     IEnumerator IncreaseSize()

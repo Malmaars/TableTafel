@@ -14,6 +14,7 @@ public interface ITile
     public foliage foliage { get; set; }
 
     public Vector3 originalSize { get; set; }
+    public bool beingAnimated { get; set; }
 }
 
 public class Hexagon : ITile
@@ -34,7 +35,7 @@ public class Hexagon : ITile
     public foliage foliage { get; set; }
 
     public Vector3 originalSize { get; set; }
-
+    public bool beingAnimated { get; set; }
     public void ChangePosition(Vector2 _offset)
     {
         //position += _offset;
