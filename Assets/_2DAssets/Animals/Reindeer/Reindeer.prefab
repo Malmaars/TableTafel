@@ -146,6 +146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d07c298cbbe61445ab308838672fe09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetColor: 0300000002000000
+  targetColor: 03000000020000000b000000
   moveSpeed: 1.8
   myAnimator: {fileID: 5235774735357189928}

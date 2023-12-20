@@ -15,7 +15,8 @@ public enum fiducialColor
 
     sandwater,
     savannah,
-    watergrass
+    watergrass,
+    ice
 }
 
 public class FiducialParent : MonoBehaviour
