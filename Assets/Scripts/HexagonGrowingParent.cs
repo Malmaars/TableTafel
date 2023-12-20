@@ -458,8 +458,6 @@ public class HexagonGrowingParent : MonoBehaviour
             targetTile.foliage = null;
         }
 
-        
-
         switch (thisColor)
         {
             case fiducialColor.water:
@@ -468,12 +466,12 @@ public class HexagonGrowingParent : MonoBehaviour
                     case fiducialColor.water:
                         EditTile(targetTile, fiducialColor.wasteland, 7);
                         break;
-                    case fiducialColor.watergrass:
-                        EditTile(targetTile, fiducialColor.grass, 2);
-                        break;
-                    case fiducialColor.sandwater:
-                        EditTile(targetTile, fiducialColor.sand, 1);
-                        break;
+                    //case fiducialColor.watergrass:
+                    //    EditTile(targetTile, fiducialColor.grass, 2);
+                    //    break;
+                    //case fiducialColor.sandwater:
+                    //    EditTile(targetTile, fiducialColor.sandwater, 1);
+                    //    break;
                     case fiducialColor.ice:
                         EditTile(targetTile, fiducialColor.snow, 3);
                         break;
@@ -503,7 +501,7 @@ public class HexagonGrowingParent : MonoBehaviour
                         EditTile(targetTile, fiducialColor.grass, 2);
                         break;
                     case fiducialColor.sandwater:
-                        EditTile(targetTile, fiducialColor.water, 1);
+                        EditTile(targetTile, fiducialColor.water, 0);
                         break;
                 }
                 break;
