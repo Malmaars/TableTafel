@@ -49,7 +49,7 @@ public class Animal : MonoBehaviour
 
                 colorToGoTo = targetColor[randomIndex];
 
-                if(randomIndex != currentTargetIndex && CheckTileList(colorToGoTo))
+                if(CheckTileList(colorToGoTo))
                 {
                     currentTargetIndex = randomIndex;
                     residenceMax = Random.Range(8, 16);
@@ -59,6 +59,10 @@ public class Animal : MonoBehaviour
 
             else
             {
+                if (!CheckTileList(colorToGoTo))
+                {
+                    currentTargetIndex++;
+                }
                 colorToGoTo = targetColor[currentTargetIndex];
             }
             switch (colorToGoTo)
