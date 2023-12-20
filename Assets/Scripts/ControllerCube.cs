@@ -18,13 +18,13 @@ public class ControllerCube : MonoBehaviour
         {
             switch (thisColor)
             {
-                case fiducialColor.blue:
+                case fiducialColor.water:
                     other.gameObject.GetComponent<MeshRenderer>().material = materialColors[0];
                     break;
-                case fiducialColor.red:
+                case fiducialColor.sand:
                     other.gameObject.GetComponent<MeshRenderer>().material = materialColors[1];
                     break;
-                case fiducialColor.yellow:
+                case fiducialColor.snow:
                     other.gameObject.GetComponent<MeshRenderer>().material = materialColors[2];
                     break;
             }

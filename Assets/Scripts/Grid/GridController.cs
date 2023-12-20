@@ -14,7 +14,7 @@ public class GridController : MonoBehaviour
     {
         BlackBoard.gridController = this;
         SetGridArray(gridGenerator.gridArray);
-        MoveGrid(new Vector2(-20, -20));
+        MoveGrid(new Vector2(-30, -30));
     }
 
     //to avoid going through the entire array, we'll need to make custom grid positions

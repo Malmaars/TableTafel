@@ -44,8 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d07c298cbbe61445ab308838672fe09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hexagonParent: {fileID: 0}
-  targetColor: 1
+  targetColor: 00000000
   moveSpeed: 0.1
   myAnimator: {fileID: 6860987001053997390}
 --- !u!1001 &4102551868059910100

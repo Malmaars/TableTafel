@@ -6,10 +6,10 @@ public class AreaController : FidController
 {
     fiducialColor thisColor;
 
-    //0 = blue, 1 = red, 2 = yellow, 3 = green, 4 = purple, 5 = orange, 6 = black
+    //0 = water, 1 = sand, 2 = snow, 3 = grass, 4 = tundra, 5 = bamboo, 6 = mixed
     Material[] materialColors;
 
-    public Material White;
+    public Material wasteland;
 
     private void Awake()
     {
@@ -39,72 +39,72 @@ public class AreaController : FidController
             fiducialColor cubeColor = other.gameObject.GetComponent<CubeData>().thisColor;
             switch (thisColor)
             {
-                case fiducialColor.blue:
-                    if (cubeColor == fiducialColor.red)
+                case fiducialColor.water:
+                    if (cubeColor == fiducialColor.sand)
                     {
                         mr.material = materialColors[4];
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.purple;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.tundra;
                     }
-                    else if (cubeColor == fiducialColor.yellow)
+                    else if (cubeColor == fiducialColor.snow)
                     {
                         mr.material = materialColors[3];
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.green;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.grass;
                     }
-                    else if (cubeColor == fiducialColor.orange)
+                    else if (cubeColor == fiducialColor.bamboo)
                     {
                         mr.material = materialColors[6];
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.black;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.mixed;
                     }
-                    else if (cubeColor == fiducialColor.white)
+                    else if (cubeColor == fiducialColor.wasteland)
                     {
                         mr.material = materialColors[0];
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.blue;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.water;
 
                     }
                     break;
-                case fiducialColor.red:
-                    if (cubeColor == fiducialColor.blue)
+                case fiducialColor.sand:
+                    if (cubeColor == fiducialColor.water)
                     {
                         mr.material = materialColors[4];
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.purple;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.tundra;
                     }
-                    else if (cubeColor == fiducialColor.yellow)
+                    else if (cubeColor == fiducialColor.snow)
                     {
                         mr.material = materialColors[5];
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.orange;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.bamboo;
                     }
-                    else if (cubeColor == fiducialColor.green)
+                    else if (cubeColor == fiducialColor.grass)
                     {
                         mr.material = materialColors[6];
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.black;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.mixed;
                     }
-                    else if (cubeColor == fiducialColor.white)
+                    else if (cubeColor == fiducialColor.wasteland)
                     {
                         mr.material = materialColors[1];
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.red;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.sand;
 
                     }
                     break;
-                case fiducialColor.yellow:
-                    if (cubeColor == fiducialColor.blue)
+                case fiducialColor.snow:
+                    if (cubeColor == fiducialColor.water)
                     {
                         mr.material = materialColors[3];
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.green;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.grass;
                     }
-                    else if (cubeColor == fiducialColor.red)
+                    else if (cubeColor == fiducialColor.sand)
                     {
                         mr.material = materialColors[5];
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.orange;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.bamboo;
                     }
-                    else if (cubeColor == fiducialColor.purple)
+                    else if (cubeColor == fiducialColor.tundra)
                     {
                         mr.material = materialColors[6];
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.black;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.mixed;
                     }
-                    else if (cubeColor == fiducialColor.white)
+                    else if (cubeColor == fiducialColor.wasteland)
                     {
                         mr.material = materialColors[2];
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.yellow;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.snow;
 
                     }
                     break;
@@ -120,71 +120,71 @@ public class AreaController : FidController
             fiducialColor cubeColor = other.gameObject.GetComponent<CubeData>().thisColor;
             switch (thisColor)
             {
-                case fiducialColor.blue:
-                    Debug.Log("Blue");
-                    if (cubeColor == fiducialColor.blue)
+                case fiducialColor.water:
+                    Debug.Log("water");
+                    if (cubeColor == fiducialColor.water)
                     {
-                        mr.material = White;
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.white;
+                        mr.material = wasteland;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.wasteland;
                     }
-                    else if (cubeColor == fiducialColor.purple)
+                    else if (cubeColor == fiducialColor.tundra)
                     {
                         mr.material = materialColors[1];
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.red;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.sand;
                     }
-                    else if (cubeColor == fiducialColor.green)
+                    else if (cubeColor == fiducialColor.grass)
                     {
                         mr.material = materialColors[2];
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.yellow;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.snow;
                     }
-                    else if (cubeColor == fiducialColor.black)
+                    else if (cubeColor == fiducialColor.mixed)
                     {
                         mr.material = materialColors[5];
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.orange;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.bamboo;
                     }
                     break;
-                case fiducialColor.red:
-                    if (cubeColor == fiducialColor.red)
+                case fiducialColor.sand:
+                    if (cubeColor == fiducialColor.sand)
                     {
-                        mr.material = White;
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.white;
+                        mr.material = wasteland;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.wasteland;
                     }
-                    else if (cubeColor == fiducialColor.orange)
+                    else if (cubeColor == fiducialColor.bamboo)
                     {
                         mr.material = materialColors[2];
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.yellow;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.snow;
                     }
-                    else if (cubeColor == fiducialColor.purple)
+                    else if (cubeColor == fiducialColor.tundra)
                     {
                         mr.material = materialColors[0];
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.blue;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.water;
                     }
-                    else if (cubeColor == fiducialColor.black)
+                    else if (cubeColor == fiducialColor.mixed)
                     {
                         mr.material = materialColors[3];
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.green;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.grass;
                     }
                     break;
-                case fiducialColor.yellow:
-                    if (cubeColor == fiducialColor.yellow)
+                case fiducialColor.snow:
+                    if (cubeColor == fiducialColor.snow)
                     {
-                        mr.material = White;
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.white;
+                        mr.material = wasteland;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.wasteland;
                     }
-                    else if (cubeColor == fiducialColor.green)
+                    else if (cubeColor == fiducialColor.grass)
                     {
                         mr.material = materialColors[0];
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.blue;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.water;
                     }
-                    else if (cubeColor == fiducialColor.orange)
+                    else if (cubeColor == fiducialColor.bamboo)
                     {
                         mr.material = materialColors[1];
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.red;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.sand;
                     }
-                    else if (cubeColor == fiducialColor.black)
+                    else if (cubeColor == fiducialColor.mixed)
                     {
                         mr.material = materialColors[4];
-                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.purple;
+                        other.gameObject.GetComponent<CubeData>().thisColor = fiducialColor.tundra;
                     }
                     break;
             }

@@ -25,6 +25,7 @@ public class GridGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        BlackBoard.Initialize();
         gridArray = new ITile[(int)gridSize.x, (int)gridSize.y];
        //generate the Cubes
        for(int i = 0; i < gridSize.x; i++)
@@ -49,7 +50,8 @@ public class GridGenerator : MonoBehaviour
                 switch (type)
                 {
                     case tileType.hexagon:
-                        gridArray[(int)i, (int)k] = new Hexagon(new Vector2Int(i, k), visualTile, fiducialColor.white);
+                        gridArray[(int)i, (int)k] = new Hexagon(new Vector2Int(i, k), visualTile, fiducialColor.wasteland);
+                        BlackBoard.AssignTile(gridArray[(int)i, (int)k]);
                         if (debugMode)
                         {
                             Instantiate(debugVisual, visualTile.transform);

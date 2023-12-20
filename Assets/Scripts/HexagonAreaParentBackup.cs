@@ -265,70 +265,70 @@ public class HexagonAreaParentBackup : MonoBehaviour
 
         switch (thisColor)
         {
-            case fiducialColor.blue:
-                if (targetTile.myColor == fiducialColor.red)
+            case fiducialColor.water:
+                if (targetTile.myColor == fiducialColor.sand)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[4];
-                    targetTile.myColor = fiducialColor.purple;
+                    targetTile.myColor = fiducialColor.tundra;
                 }
-                else if (targetTile.myColor == fiducialColor.yellow)
+                else if (targetTile.myColor == fiducialColor.snow)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[3];
-                    targetTile.myColor = fiducialColor.green;
+                    targetTile.myColor = fiducialColor.grass;
                 }
-                else if (targetTile.myColor == fiducialColor.orange)
+                else if (targetTile.myColor == fiducialColor.bamboo)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[6];
-                    targetTile.myColor = fiducialColor.black;
+                    targetTile.myColor = fiducialColor.mixed;
                 }
-                else if (targetTile.myColor == fiducialColor.white)
+                else if (targetTile.myColor == fiducialColor.wasteland)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[0];
-                    targetTile.myColor = fiducialColor.blue;
+                    targetTile.myColor = fiducialColor.water;
                 }
                 break;
-            case fiducialColor.red:
-                if (targetTile.myColor == fiducialColor.blue)
+            case fiducialColor.sand:
+                if (targetTile.myColor == fiducialColor.water)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[4];
-                    targetTile.myColor = fiducialColor.purple;
+                    targetTile.myColor = fiducialColor.tundra;
                 }
-                else if (targetTile.myColor == fiducialColor.yellow)
+                else if (targetTile.myColor == fiducialColor.snow)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[5];
-                    targetTile.myColor = fiducialColor.orange;
+                    targetTile.myColor = fiducialColor.bamboo;
                 }
-                else if (targetTile.myColor == fiducialColor.green)
+                else if (targetTile.myColor == fiducialColor.grass)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[6];
-                    targetTile.myColor = fiducialColor.black;
+                    targetTile.myColor = fiducialColor.mixed;
                 }
-                else if (targetTile.myColor == fiducialColor.white)
+                else if (targetTile.myColor == fiducialColor.wasteland)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[1];
-                    targetTile.myColor = fiducialColor.red;
+                    targetTile.myColor = fiducialColor.sand;
                 }
                 break;
-            case fiducialColor.yellow:
-                if (targetTile.myColor == fiducialColor.blue)
+            case fiducialColor.snow:
+                if (targetTile.myColor == fiducialColor.water)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[3];
-                    targetTile.myColor = fiducialColor.green;
+                    targetTile.myColor = fiducialColor.grass;
                 }
-                else if (targetTile.myColor == fiducialColor.red)
+                else if (targetTile.myColor == fiducialColor.sand)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[5];
-                    targetTile.myColor = fiducialColor.orange;
+                    targetTile.myColor = fiducialColor.bamboo;
                 }
-                else if (targetTile.myColor == fiducialColor.purple)
+                else if (targetTile.myColor == fiducialColor.tundra)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[6];
-                    targetTile.myColor = fiducialColor.black;
+                    targetTile.myColor = fiducialColor.mixed;
                 }
-                else if (targetTile.myColor == fiducialColor.white)
+                else if (targetTile.myColor == fiducialColor.wasteland)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[2];
-                    targetTile.myColor = fiducialColor.yellow;
+                    targetTile.myColor = fiducialColor.snow;
                 }
                 break;
         }
@@ -349,75 +349,75 @@ public class HexagonAreaParentBackup : MonoBehaviour
     {
         switch (thisColor)
         {
-            case fiducialColor.blue:
-                if (targetTile.myColor == fiducialColor.blue)
+            case fiducialColor.water:
+                if (targetTile.myColor == fiducialColor.water)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[7];
-                    targetTile.myColor = fiducialColor.white;
+                    targetTile.myColor = fiducialColor.wasteland;
                 }
-                else if (targetTile.myColor == fiducialColor.purple)
+                else if (targetTile.myColor == fiducialColor.tundra)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[1];
-                    targetTile.myColor = fiducialColor.red;
+                    targetTile.myColor = fiducialColor.sand;
                 }
-                else if (targetTile.myColor == fiducialColor.green)
+                else if (targetTile.myColor == fiducialColor.grass)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[2];
-                    targetTile.myColor = fiducialColor.yellow;
+                    targetTile.myColor = fiducialColor.snow;
                 }
-                else if (targetTile.myColor == fiducialColor.black)
+                else if (targetTile.myColor == fiducialColor.mixed)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[5];
-                    targetTile.myColor = fiducialColor.orange;
+                    targetTile.myColor = fiducialColor.bamboo;
                 }
                 break;
-            case fiducialColor.red:
-                if (targetTile.myColor == fiducialColor.red)
+            case fiducialColor.sand:
+                if (targetTile.myColor == fiducialColor.sand)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[7];
-                    targetTile.myColor = fiducialColor.white;
+                    targetTile.myColor = fiducialColor.wasteland;
                 }
-                else if (targetTile.myColor == fiducialColor.orange)
+                else if (targetTile.myColor == fiducialColor.bamboo)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[2];
-                    targetTile.myColor = fiducialColor.yellow;
+                    targetTile.myColor = fiducialColor.snow;
                 }
-                else if (targetTile.myColor == fiducialColor.purple)
+                else if (targetTile.myColor == fiducialColor.tundra)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[0];
-                    targetTile.myColor = fiducialColor.blue;
+                    targetTile.myColor = fiducialColor.water;
                 }
-                else if (targetTile.myColor == fiducialColor.black)
+                else if (targetTile.myColor == fiducialColor.mixed)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[3];
-                    targetTile.myColor = fiducialColor.green;
+                    targetTile.myColor = fiducialColor.grass;
                 }
                 break;
-            case fiducialColor.yellow:
-                if (targetTile.myColor == fiducialColor.yellow)
+            case fiducialColor.snow:
+                if (targetTile.myColor == fiducialColor.snow)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[7];
-                    targetTile.myColor = fiducialColor.white;
+                    targetTile.myColor = fiducialColor.wasteland;
                 }
-                else if (targetTile.myColor == fiducialColor.green)
+                else if (targetTile.myColor == fiducialColor.grass)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[0];
-                    targetTile.myColor = fiducialColor.blue;
+                    targetTile.myColor = fiducialColor.water;
                 }
-                else if (targetTile.myColor == fiducialColor.orange)
+                else if (targetTile.myColor == fiducialColor.bamboo)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[1];
-                    targetTile.myColor = fiducialColor.red;
+                    targetTile.myColor = fiducialColor.sand;
                 }
-                else if (targetTile.myColor == fiducialColor.black)
+                else if (targetTile.myColor == fiducialColor.mixed)
                 {
                     targetTile.visual.GetComponent<SpriteRenderer>().sprite = colorSprites[4];
-                    targetTile.myColor = fiducialColor.purple;
+                    targetTile.myColor = fiducialColor.tundra;
                 }
                 break;
         }
 
-        if(targetTile.foliage != null && targetTile.foliage.foliageColor == thisColor)
+        if (targetTile.foliage != null && targetTile.foliage.foliageColor == thisColor)
         {
             foliageGenerator.RemoveFoliage(targetTile.foliage);
             targetTile.foliage = null;

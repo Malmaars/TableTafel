@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Animal : MonoBehaviour
 {
-    //THIS IS NOT EFFICIENT AND WILL ONLY BE USED FOR THE PLAYTEST ON 25/11
-    public HexagonAreaParent hexagonParent;
-
-    public fiducialColor targetColor;
+    public fiducialColor[] targetColor;
+    int currentTargetIndex;
+    int currentTargetResidence;
+    int residenceMax;
     ITile currentTarget;
     GameObject visual;
 
@@ -25,6 +25,7 @@ public class Animal : MonoBehaviour
     private void Start()
     {
         visual = this.gameObject;
+        myAnimator.SetBool("Still", true);
     }
 
     public void SetDestination(ITile newTarget)
@@ -32,15 +33,77 @@ public class Animal : MonoBehaviour
         myAnimator.SetBool("Still", false);
         currentTarget = newTarget;
         destination = newTarget.visual.transform.position;
+        Debug.Log(destination);
         Vector3 direction = new Vector3(destination.x, 0, destination.z) - new Vector3(visual.transform.position.x, 0, visual.transform.position.z);
         visual.transform.forward = direction.normalized;
 
     }
     private void Update()
     {
-        if (destination != null && hexagonParent.fiducialController.isVisible)
+        if (destination != null)
         {
-            WalkToDestination();
+            fiducialColor colorToGoTo = targetColor[0];
+            if (currentTargetResidence >= residenceMax)
+            {
+                int randomIndex = Random.Range(0, targetColor.Length);
+
+                colorToGoTo = targetColor[randomIndex];
+
+                if(randomIndex != currentTargetIndex && CheckTileList(colorToGoTo))
+                {
+                    currentTargetIndex = randomIndex;
+                    residenceMax = Random.Range(8, 16);
+                    currentTargetResidence = 0;
+                }
+            }
+
+            else
+            {
+                colorToGoTo = targetColor[currentTargetIndex];
+            }
+            switch (colorToGoTo)
+            {
+                case fiducialColor.water:
+                    if(BlackBoard.waterTiles.Count > 0)
+                        WalkToDestination(BlackBoard.waterTiles);
+                    break;
+                case fiducialColor.grass:
+                    if (BlackBoard.grassTiles.Count > 0)
+                        WalkToDestination(BlackBoard.grassTiles);
+                    break;
+                case fiducialColor.sand:
+                    if (BlackBoard.sandTiles.Count > 0)
+                        WalkToDestination(BlackBoard.sandTiles);
+                    break;
+                case fiducialColor.snow:
+                    if (BlackBoard.snowTiles.Count > 0)
+                        WalkToDestination(BlackBoard.snowTiles);
+                    break;
+                case fiducialColor.bamboo:
+                    if (BlackBoard.bambooTiles.Count > 0)
+                        WalkToDestination(BlackBoard.bambooTiles);
+                    break;
+                case fiducialColor.savannah:
+                    if (BlackBoard.savannahTiles.Count > 0)
+                        WalkToDestination(BlackBoard.savannahTiles);
+                    break;
+                case fiducialColor.sandwater:
+                    if (BlackBoard.sandWaterTiles.Count > 0)
+                        WalkToDestination(BlackBoard.sandWaterTiles);
+                    break;
+                case fiducialColor.watergrass:
+                    if (BlackBoard.grassWaterTiles.Count > 0)
+                        WalkToDestination(BlackBoard.grassWaterTiles);
+                    break;
+                case fiducialColor.tundra:
+                    if (BlackBoard.tundraTiles.Count > 0)
+                        WalkToDestination(BlackBoard.tundraTiles);
+                    break;
+                case fiducialColor.wasteland:
+                    if (BlackBoard.wastelandTiles.Count > 0)
+                        WalkToDestination(BlackBoard.wastelandTiles);
+                    break;
+            }
         }
         else
         {
@@ -48,25 +111,72 @@ public class Animal : MonoBehaviour
         }
     }
 
-    public void WalkToDestination()
+    bool CheckTileList(fiducialColor _color)
     {
-        if(currentTarget == null || currentTarget.myColor != targetColor)
+        switch (_color)
+        {
+            case fiducialColor.water:
+                if (BlackBoard.waterTiles.Count == 0)
+                    return false;
+                break;
+            case fiducialColor.grass:
+                if (BlackBoard.grassTiles.Count == 0)
+                    return false;
+                break;
+            case fiducialColor.sand:
+                if (BlackBoard.sandTiles.Count == 0)
+                    return false;
+                break;
+            case fiducialColor.snow:
+                if (BlackBoard.snowTiles.Count == 0)
+                    return false;
+                break;
+            case fiducialColor.bamboo:
+                if (BlackBoard.bambooTiles.Count == 0)
+                    return false;
+                break;
+            case fiducialColor.savannah:
+                if (BlackBoard.savannahTiles.Count == 0)
+                    return false;
+                break;
+            case fiducialColor.sandwater:
+                if (BlackBoard.sandWaterTiles.Count == 0)
+                    return false;
+                break;
+            case fiducialColor.watergrass:
+                if (BlackBoard.grassWaterTiles.Count == 0)
+                    return false;
+                break;
+            case fiducialColor.tundra:
+                if (BlackBoard.tundraTiles.Count == 0)
+                    return false;
+                break;
+            case fiducialColor.wasteland:
+                if (BlackBoard.wastelandTiles.Count == 0)
+                    return false;
+                break;
+        }
+
+        return true;
+    }
+
+    public void WalkToDestination(List<ITile> tileList)
+    {
+        if(currentTarget == null)
         {
             //set new destination
-            ITile[] tileArray = new ITile[hexagonParent.currentSelection.Count];
-            hexagonParent.currentSelection.CopyTo(tileArray);
-
-            if (tileArray.Length != 0)
+            if (tileList.Count > 0)
             {
-                int randomTileNumber = Random.Range(0, tileArray.Length);
-                SetDestination(tileArray[randomTileNumber]);
+                int randomTileNumber = Random.Range(0, tileList.Count);
+                SetDestination(tileList[randomTileNumber]);
                 waiting = false;
                 waitTimer = 0;
             }
         }
         if (Vector3.Distance(visual.transform.position, destination) > 1f)
         {
-            visual.transform.position = Vector3.Lerp(visual.transform.position, new Vector3(destination.x, visual.transform.position.y, destination.z), moveSpeed * Time.deltaTime);
+            Vector3 direction = new Vector3(destination.x - visual.transform.position.x, 0, destination.z - visual.transform.position.z).normalized;
+            visual.transform.position += direction * moveSpeed * Time.deltaTime;
         }
         else
         {
@@ -80,15 +190,12 @@ public class Animal : MonoBehaviour
 
             else
             {
-                if (waitTimer > waitTime)
+                if (waitTimer > waitTime && tileList.Count > 0)
                 {
                     //set new destination
-                    ITile[] tileArray = new ITile[hexagonParent.currentSelection.Count];
-                    hexagonParent.currentSelection.CopyTo(tileArray);
-
-                    int randomTileNumber = Random.Range(0, tileArray.Length);
-                    SetDestination(tileArray[randomTileNumber]);
-
+                    int randomTileNumber = Random.Range(0, tileList.Count);
+                    SetDestination(tileList[randomTileNumber]);
+                    currentTargetResidence++;
                     waiting = false;
                 }
 

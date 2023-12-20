@@ -4,14 +4,18 @@ using UnityEngine;
 
 public enum fiducialColor
 {
-    blue,
-    red,
-    green,
-    yellow,
-    purple,
-    orange,
-    white,
-    black
+    water,
+    sand,
+    grass,
+    snow,
+    tundra,
+    bamboo,
+    mixed,
+    wasteland,
+
+    sandwater,
+    savannah,
+    watergrass
 }
 
 public class FiducialParent : MonoBehaviour
