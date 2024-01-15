@@ -266,27 +266,24 @@ public class HexagonAreaParentBackup : MonoBehaviour
         {
             case fiducialColor.water:
                     EditTile(targetTile, fiducialColor.water, 0);
-
                 break;
             case fiducialColor.sand:
                     EditTile(targetTile, fiducialColor.sand, 1);
-
                 break;
             case fiducialColor.grass:
                     EditTile(targetTile, fiducialColor.grass, 2);
-
                 break;
             case fiducialColor.snow:
                     EditTile(targetTile, fiducialColor.snow, 3);
-
                 break;
             case fiducialColor.savannah:
                     EditTile(targetTile, fiducialColor.savannah, 9);
-
                 break;
             case fiducialColor.bamboo:
                     EditTile(targetTile, fiducialColor.bamboo, 5);
-
+                break;
+            case fiducialColor.cherryBlossom:
+                EditTile(targetTile, fiducialColor.cherryBlossom, 12);
                 break;
         }
 

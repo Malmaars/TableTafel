@@ -12,6 +12,7 @@ public enum fiducialColor
     bamboo,
     mixed,
     wasteland,
+    cherryBlossom,
 
     //double mixes
     sandwater,

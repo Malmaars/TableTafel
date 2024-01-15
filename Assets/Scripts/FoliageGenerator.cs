@@ -38,6 +38,7 @@ public class FoliageGenerator : MonoBehaviour
     public GameObject[] snowFoliagePrefabs;
     public GameObject[] bambooFoliagePrefabs;
     public GameObject[] savannahFoliagePrefabs;
+    public GameObject[] cherryBlossomFoliagePrefabs;
 
     int currentGrassFoliage = 0;
     int currentWaterFoliage = 0;
@@ -45,6 +46,7 @@ public class FoliageGenerator : MonoBehaviour
     int currentSnowFoliage = 0;
     int currentSavannahFoliage = 0;
     int currentBambooFoliage = 0;
+    int currentCherryBlossomFoliage = 0;
 
     ObjectPool<foliage> grassFoliage;
     ObjectPool<foliage> waterFoliage;
@@ -52,6 +54,7 @@ public class FoliageGenerator : MonoBehaviour
     ObjectPool<foliage> snowFoliage;
     ObjectPool<foliage> bambooFoliage;
     ObjectPool<foliage> savannahFoliage;
+    ObjectPool<foliage> cherryBlossomFoliage;
 
     private void Start()
     {
@@ -61,6 +64,7 @@ public class FoliageGenerator : MonoBehaviour
         snowFoliage = new ObjectPool<foliage>();
         bambooFoliage = new ObjectPool<foliage>();
         savannahFoliage = new ObjectPool<foliage>();
+        cherryBlossomFoliage = new ObjectPool<foliage>();
     }
 
     public foliage GenerateFoliage(fiducialColor _color, Vector3 _position)
@@ -171,6 +175,23 @@ public class FoliageGenerator : MonoBehaviour
                     savannahFoliage.AddActiveItemToPool(newFoliage);
                 }
                 break;
+            case fiducialColor.cherryBlossom:
+                if (cherryBlossomFoliage.RequestPoolSize() > 0)
+                {
+                    newFoliage = cherryBlossomFoliage.RequestItem();
+                    newFoliage.visual.transform.position = _position + new Vector3(0, newFoliage.visual.transform.position.y, 0);
+                }
+                else
+                {
+                    _position += new Vector3(0, cherryBlossomFoliagePrefabs[currentCherryBlossomFoliage].transform.position.y, 0);
+                    Quaternion newRotation = Quaternion.Euler(new Vector3(cherryBlossomFoliagePrefabs[currentCherryBlossomFoliage].transform.rotation.eulerAngles.x, 0, Random.Range(0, 360f)));
+                    newFoliage = new foliage(Instantiate(savannahFoliagePrefabs[currentCherryBlossomFoliage], _position, newRotation), fiducialColor.cherryBlossom);
+                    currentCherryBlossomFoliage++;
+                    if (currentCherryBlossomFoliage >= cherryBlossomFoliagePrefabs.Length)
+                        currentCherryBlossomFoliage = 0;
+                    cherryBlossomFoliage.AddActiveItemToPool(newFoliage);
+                }
+                break;
         }
 
         StartCoroutine(AnimateFoliage(newFoliage));
@@ -214,6 +235,9 @@ public class FoliageGenerator : MonoBehaviour
                 break;
             case fiducialColor.savannah:
                 savannahFoliage.ReturnObjectToPool(_toRemove);
+                break;
+            case fiducialColor.cherryBlossom:
+                cherryBlossomFoliage.ReturnObjectToPool(_toRemove);
                 break;
         }
     }
