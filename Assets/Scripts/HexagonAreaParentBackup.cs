@@ -171,7 +171,7 @@ public class HexagonAreaParentBackup : MonoBehaviour
 
         for (int i = -Mathf.RoundToInt(radius); i <= Mathf.RoundToInt(radius); i++)
         {
-            Debug.Log(radius);
+            //Debug.Log(radius);
             ITile targetTile = BlackBoard.gridController.Grid[xGridPos, yGridPos + i];
             newSelection.Add(targetTile);
         }
@@ -283,7 +283,7 @@ public class HexagonAreaParentBackup : MonoBehaviour
                     EditTile(targetTile, fiducialColor.bamboo, 5);
                 break;
             case fiducialColor.cherryBlossom:
-                EditTile(targetTile, fiducialColor.cherryBlossom, 12);
+                    EditTile(targetTile, fiducialColor.cherryBlossom, 12);
                 break;
         }
 

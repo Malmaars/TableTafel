@@ -19,7 +19,7 @@ public static class BlackBoard
     public static Vector2 gridOffset;
     public static GridController gridController;
 
-    public static List<ITile> waterTiles, grassTiles, sandTiles, snowTiles, wastelandTiles, bambooTiles, savannahTiles, sandWaterTiles, grassWaterTiles, tundraTiles, mixedTiles, iceTiles;
+    public static List<ITile> waterTiles, grassTiles, sandTiles, snowTiles, wastelandTiles, bambooTiles, savannahTiles, sandWaterTiles, grassWaterTiles, tundraTiles, mixedTiles, iceTiles, cherryBlossomTiles;
 
     public static void Initialize()
     {
@@ -35,6 +35,7 @@ public static class BlackBoard
         tundraTiles = new List<ITile>();
         mixedTiles = new List<ITile>();
         iceTiles = new List<ITile>();
+        cherryBlossomTiles = new List<ITile>();
     }
 
     public static void UnAssignTile(ITile _tile)
@@ -76,6 +77,9 @@ public static class BlackBoard
                 break;
             case fiducialColor.ice:
                 iceTiles.Remove(_tile);
+                break;
+            case fiducialColor.cherryBlossom:
+                cherryBlossomTiles.Remove(_tile);
                 break;
         }
     }
@@ -120,6 +124,10 @@ public static class BlackBoard
             case fiducialColor.ice:
                 iceTiles.Add(_tile);
                 break;
+            case fiducialColor.cherryBlossom:
+                cherryBlossomTiles.Add(_tile);
+                break;
+
         }
     }
 }

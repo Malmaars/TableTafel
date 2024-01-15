@@ -185,7 +185,7 @@ public class FoliageGenerator : MonoBehaviour
                 {
                     _position += new Vector3(0, cherryBlossomFoliagePrefabs[currentCherryBlossomFoliage].transform.position.y, 0);
                     Quaternion newRotation = Quaternion.Euler(new Vector3(cherryBlossomFoliagePrefabs[currentCherryBlossomFoliage].transform.rotation.eulerAngles.x, 0, Random.Range(0, 360f)));
-                    newFoliage = new foliage(Instantiate(savannahFoliagePrefabs[currentCherryBlossomFoliage], _position, newRotation), fiducialColor.cherryBlossom);
+                    newFoliage = new foliage(Instantiate(cherryBlossomFoliagePrefabs[currentCherryBlossomFoliage], _position, newRotation), fiducialColor.cherryBlossom);
                     currentCherryBlossomFoliage++;
                     if (currentCherryBlossomFoliage >= cherryBlossomFoliagePrefabs.Length)
                         currentCherryBlossomFoliage = 0;

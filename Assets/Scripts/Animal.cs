@@ -33,7 +33,7 @@ public class Animal : MonoBehaviour
         myAnimator.SetBool("Still", false);
         currentTarget = newTarget;
         destination = newTarget.visual.transform.position;
-        Debug.Log(destination);
+        //Debug.Log(destination);
         Vector3 direction = new Vector3(destination.x, 0, destination.z) - new Vector3(visual.transform.position.x, 0, visual.transform.position.z);
         visual.transform.forward = direction.normalized;
 
