@@ -18,6 +18,7 @@ public class foliage : IPoolable
     public GameObject visual { get; set; }
 
     public bool beingAnimated;
+    public int controllers;
 
     public bool active { get; set; }
     public void OnEnableObject()
@@ -200,6 +201,13 @@ public class FoliageGenerator : MonoBehaviour
 
     public IEnumerator RemoveFoliage(foliage _toRemove)
     {
+
+        while (_toRemove.beingAnimated)
+        {
+            //wait
+            yield return null;
+        }
+
         Vector3 target = _toRemove.originalSize * 2;
         _toRemove.visual.transform.position += new Vector3(0, 1, 0);
         while (Vector3.Distance(_toRemove.visual.transform.localScale, target) > 0.1f)
@@ -250,22 +258,38 @@ public class FoliageGenerator : MonoBehaviour
             yield return null;
         }
 
+        _foliage.controllers++;
         _foliage.beingAnimated = true;
         Vector3 oldTransform = _foliage.originalSize;
         
         Vector3 target = oldTransform * 2;
         _foliage.visual.transform.position += new Vector3(0, 1, 0);
-        while (_foliage.visual.transform.localScale != target)
+        while (_foliage.visual.transform.localScale.x < target.x - 0.01f)
         {
+            Debug.Log("Making animation bigger");
             _foliage.visual.transform.localScale = Vector3.Lerp(_foliage.visual.transform.localScale, target, Time.deltaTime * 30);
             yield return null; // Pause and resume on the next frame
         }
 
-        while (_foliage.visual.transform.localScale != oldTransform)
+        while (_foliage.visual.transform.localScale.x > oldTransform.x + 0.01f)
         {
-            _foliage.visual.transform.localScale = Vector3.Lerp(_foliage.visual.transform.localScale, oldTransform, Time.deltaTime * 10);
-            yield return null; // Pause and resume on the next frame
+            Debug.Log("Making animation smaller");
+
+            Vector3 newScale = Vector3.Lerp(_foliage.visual.transform.localScale, oldTransform, Time.deltaTime * 10);
+
+            if (newScale.x < _foliage.visual.transform.localScale.x)
+            {
+                _foliage.visual.transform.localScale = newScale;
+            }
+            else
+            {
+                Debug.Log("ITS BIGGER HOW IS IT BIGGER");
+            }
+            //yield return null; // Pause and resume on the next frame
+            yield return new WaitForEndOfFrame();
         }
+
+        _foliage.controllers = 0;
         _foliage.visual.transform.position -= new Vector3(0, 1, 0);
         _foliage.visual.transform.localScale = oldTransform;
         _foliage.beingAnimated = false;
