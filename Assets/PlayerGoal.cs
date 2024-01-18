@@ -18,36 +18,36 @@ public class PlayerGoal : MonoBehaviour
     List<Goal> activegoals;
     List<Goal> inactiveGoals;
 
+    public bool completeGoal = false;
     // Start is called before the first frame update
-    void Start()
+    public void Initialize()
     {
         activegoals = new List<Goal>();
         inactiveGoals = new List<Goal>();
 
         Goal firstGoal = new Goal(TileGoalPrefab, transform);
         firstGoal.Initialize(new Vector3(1, 0, 1));
-        activegoals.Add(firstGoal);
-        CreateGoal(firstGoal, fiducialColor.water, 500);
+        inactiveGoals.Add(firstGoal);
+        firstGoal.OnDisableObject();
 
         Goal secondGoal = new Goal(TileGoalPrefab, transform);
         secondGoal.Initialize(new Vector3(-1, 0, 1));
-        activegoals.Add(secondGoal);
-        CreateGoal(secondGoal, fiducialColor.grass, 500);
+        inactiveGoals.Add(secondGoal);
+        secondGoal.OnDisableObject();
 
         Goal thirdGoal = new Goal(TileGoalPrefab, transform);
         thirdGoal.Initialize(new Vector3(1, 0, -1));
-        activegoals.Add(thirdGoal);
-        CreateGoal(thirdGoal, fiducialColor.sand, 500);
+        inactiveGoals.Add(thirdGoal);
+        thirdGoal.OnDisableObject();
 
         Goal fourthGoal = new Goal(TileGoalPrefab, transform);
         fourthGoal.Initialize(new Vector3(-1, 0, -1));
-        activegoals.Add(fourthGoal);
-        CreateGoal(fourthGoal, fiducialColor.snow, 500);
-
+        inactiveGoals.Add(fourthGoal);
+        fourthGoal.OnDisableObject();
     }
 
     // Update is called once per frame
-    void Update()
+    public void LogicUpdate()
     {
         bool completedGoal = true;
         foreach(Goal goal in activegoals)
@@ -70,6 +70,35 @@ public class PlayerGoal : MonoBehaviour
         }
     }
 
+    public void SetGoals()
+    {
+        int amountOfTiles = 2000;
+        List<fiducialColor> unused = new List<fiducialColor> {fiducialColor.water, fiducialColor.grass, fiducialColor.cherryBlossom, fiducialColor.snow,  fiducialColor.savannah, fiducialColor.bamboo};
+
+        for (int i = 0; i < inactiveGoals.Count; i += 0)
+        {
+            inactiveGoals[i].OnEnableObject();
+
+            fiducialColor colorTarget = unused[Random.Range(0, unused.Count)];
+            unused.Remove(colorTarget);
+
+            if (inactiveGoals.Count == 1)
+            {
+                CreateGoal(inactiveGoals[i], colorTarget, amountOfTiles);
+            }
+
+            else
+            {
+                int thisAmount = Random.Range(300, 600);
+                CreateGoal(inactiveGoals[i], colorTarget, thisAmount);
+                amountOfTiles -= thisAmount;
+            }
+
+            activegoals.Add(inactiveGoals[i]);
+            inactiveGoals.Remove(inactiveGoals[i]);
+        }
+    }
+
     void CreateGoal(Goal newGoal, fiducialColor newTile, int goalAmount)
     {
         Sprite newSprite = null;
@@ -79,7 +108,7 @@ public class PlayerGoal : MonoBehaviour
             case fiducialColor.water:
                 newSprite = TileSprites[0];
                 break;
-            case fiducialColor.sand:
+            case fiducialColor.bamboo:
                 newSprite = TileSprites[1];
                 break;
             case fiducialColor.grass:
@@ -122,9 +151,12 @@ public class PlayerGoal : MonoBehaviour
             {
                 if (!particle.isPlaying)
                     completeAnimationBool = false;
-                
+
                 else
+                {
                     completeAnimationBool = true;
+                    completeGoal = true;
+                }
             }
             yield return null;
         }
@@ -199,9 +231,9 @@ public class Goal : IPoolable
                     goalComplete = false;
                 }
                 break;
-            case fiducialColor.sand:
-                currentPercentage = 1 / (float)currentTargetAmount * (float)BlackBoard.sandTiles.Count;
-                if (BlackBoard.sandTiles.Count >= currentTargetAmount)
+            case fiducialColor.bamboo:
+                currentPercentage = 1 / (float)currentTargetAmount * (float)BlackBoard.bambooTiles.Count;
+                if (BlackBoard.bambooTiles.Count >= currentTargetAmount)
                 {
                     goalComplete = true;
                 }

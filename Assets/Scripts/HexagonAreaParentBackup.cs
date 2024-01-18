@@ -82,24 +82,25 @@ public class HexagonAreaParentBackup : MonoBehaviour
         //set a specific float for the positionMultiplier per range it's in
         //xPos = 15.4 xNeg = 15  YPos =10.9 YNeg = 12.8
 
+        
         if (fiducialController.ScreenPosition.x >= 0.5f)
         {
-            positionXMultiplier = 37.73f;
+            positionXMultiplier = 38.2f;
         }
         else
         {
-            positionXMultiplier = 33.7f;
+            positionXMultiplier = 28.7f;
         }
 
         if (fiducialController.ScreenPosition.y >= 0.5f)
         {
-            positionYMultiplier = 25.5f;
+            positionYMultiplier = 12.6f;
         }
         else
         {
-            positionYMultiplier = 25.5f;
+            positionYMultiplier = 28.2f;
         }
-
+        
 
         //to make sure 0,0,0 is the center, we have to subtract half of the multiplier. In reactivision, 0,0 is the upper left corner and 1,1 is the lower right corner.
 

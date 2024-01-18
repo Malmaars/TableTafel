@@ -106,6 +106,10 @@ public class Animal : MonoBehaviour
                     if (BlackBoard.tundraTiles.Count > 0)
                         WalkToDestination(BlackBoard.tundraTiles);
                     break;
+                case fiducialColor.cherryBlossom:
+                    if (BlackBoard.cherryBlossomTiles.Count > 0)
+                        WalkToDestination(BlackBoard.cherryBlossomTiles);
+                    break;
                 case fiducialColor.wasteland:
                     if (BlackBoard.wastelandTiles.Count > 0)
                         WalkToDestination(BlackBoard.wastelandTiles);
@@ -158,6 +162,10 @@ public class Animal : MonoBehaviour
                 if (BlackBoard.tundraTiles.Count == 0)
                     return false;
                 break;
+            case fiducialColor.cherryBlossom:
+                if (BlackBoard.cherryBlossomTiles.Count == 0)
+                    return false;
+                break;
             case fiducialColor.wasteland:
                 if (BlackBoard.wastelandTiles.Count == 0)
                     return false;
@@ -192,7 +200,7 @@ public class Animal : MonoBehaviour
                 myAnimator.SetBool("Still", true);
                 waiting = true;
                 waitTimer = 0;
-                waitTime = Random.Range(1f, 2f);
+                waitTime = Random.Range(2f, 5f);
             }
 
             else

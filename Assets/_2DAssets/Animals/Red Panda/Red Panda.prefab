@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d07c298cbbe61445ab308838672fe09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetColor: 01000000080000000a000000
+  targetColor: 0800000002000000
   moveSpeed: 1.4
   myAnimator: {fileID: 8166211564395049688}
 --- !u!1001 &8808750224292435367
