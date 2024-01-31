@@ -85,20 +85,20 @@ public class HexagonAreaParentBackup : MonoBehaviour
         
         if (fiducialController.ScreenPosition.x >= 0.5f)
         {
-            positionXMultiplier = 38.2f;
+            positionXMultiplier = 36.1f;
         }
         else
         {
-            positionXMultiplier = 28.7f;
+            positionXMultiplier = 32.2f;
         }
 
         if (fiducialController.ScreenPosition.y >= 0.5f)
         {
-            positionYMultiplier = 12.6f;
+            positionYMultiplier = 22.7f;
         }
         else
         {
-            positionYMultiplier = 28.2f;
+            positionYMultiplier = 24.7f;
         }
         
 

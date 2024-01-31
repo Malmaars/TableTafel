@@ -70,7 +70,7 @@ public class FoliageGenerator : MonoBehaviour
 
     public foliage GenerateFoliage(fiducialColor _color, Vector3 _position)
     {
-        Debug.Log("generate Foliage");
+        //Debug.Log("generate Foliage");
         foliage newFoliage = null;
         switch (_color)
         {
@@ -266,15 +266,12 @@ public class FoliageGenerator : MonoBehaviour
         _foliage.visual.transform.position += new Vector3(0, 1, 0);
         while (_foliage.visual.transform.localScale.x < target.x - 0.01f)
         {
-            Debug.Log("Making animation bigger");
             _foliage.visual.transform.localScale = Vector3.Lerp(_foliage.visual.transform.localScale, target, Time.deltaTime * 30);
             yield return null; // Pause and resume on the next frame
         }
 
         while (_foliage.visual.transform.localScale.x > oldTransform.x + 0.01f)
         {
-            Debug.Log("Making animation smaller");
-
             Vector3 newScale = Vector3.Lerp(_foliage.visual.transform.localScale, oldTransform, Time.deltaTime * 10);
 
             if (newScale.x < _foliage.visual.transform.localScale.x)
